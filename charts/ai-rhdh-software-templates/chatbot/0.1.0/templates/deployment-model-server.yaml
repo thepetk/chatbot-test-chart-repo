@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels: 
+    app.kubernetes.io/instance: {{ .Values.name }}-model-server
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/name: {{ .Values.name }}-model-server
+    app.kubernetes.io/part-of: {{ .Values.name }}  
+  name: {{ .Values.name }}-model-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: {{ .Values.name }}-model-server 
+  template:
+    metadata: 
+      labels:
+        app.kubernetes.io/instance: {{ .Values.name }}-model-server
+    spec:
+      initContainers:
+      - name: model-file
+        image: {{ .Values.initContainer }}
+        command: {{ .Values.modelInitCommand }}
+        volumeMounts:
+        - name: model-file
+          mountPath: /shared
+      containers:
+      - env:
+        - name: HOST
+          value: "0.0.0.0"
+        - name: PORT
+          value: "{{ .Values.modelServicePort }}"
+        - name: MODEL_PATH
+          value: {{ .Values.modelPath }}
+        - name: CHAT_FORMAT
+          value: openchat
+        image: {{ .Values.modelServiceContainer }}
+        volumeMounts:
+        - name: model-file
+          mountPath: /model
+      volumes:
+      - name: model-file
+        emptyDir: {}
