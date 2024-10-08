@@ -1,0 +1,44 @@
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: update-deployment
+spec:
+  description: Task to update deployment with newly built application image.
+  params:
+    - name: deployment-name
+      type: string
+      description: The name of the deployment that will be updated.
+    - name: deployment-namespace
+      type: string
+      description: The namespace of the deployment that will be updated
+    - name: container-name
+      description: The name of the container that its image will be updated.
+    - name: image
+      type: string
+      description: Reference of the newly built image to use.
+  steps:
+    - name: patch-deployment
+      image: quay.io/konflux-ci/appstudio-utils:ab6b0b8e40e440158e7288c73aff1cf83a2cc8a9@sha256:24179f0efd06c65d16868c2d7eb82573cce8e43533de6cea14fec3b7446e0b14
+      env:
+        - name: DEPLOYMENT_NAME
+          value: $(params.deployment-name)
+        - name: DEPLOYMENT_NAMESPACE
+          value: $(params.deployment-namespace)
+        - name: CONTAINER_NAME
+          value: $(params.container-name)
+        - name: NEW_IMAGE
+          value: $(params.image)
+      script: |
+        kubectl patch deployment ${DEPLOYMENT_NAME} --namespace ${DEPLOYMENT_NAMESPACE} --type 'merge' --patch "$( cat <<EOF
+        spec:
+          template:
+            spec:
+              containers:
+              - name: $CONTAINER_NAME
+                image: $NEW_IMAGE
+                envFrom:
+                - configMapRef:
+                    name: $DEPLOYMENT_NAME-model-config
+        EOF
+        )"
+        echo "Successfully updated ${CONTAINER_NAME} container's image to ${NEW_IMAGE}"

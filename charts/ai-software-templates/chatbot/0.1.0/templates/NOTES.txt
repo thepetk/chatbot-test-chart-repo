@@ -1,0 +1,11 @@
+
+Thank you for installing the AI Software Template Chat Application!
+
+Now that you have deployed the chatbot application, you can find more details here:
+
+https://github.com/thepetk/chatbot-test-chart-repo
+
+Your release is named {{ .Release.Name }}. To learn more about the release, try:
+
+  $ helm status {{ .Release.Name }}
+  $ helm get manifest {{ .Release.Name }}
