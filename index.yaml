@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  chatbot-ai-software-template:
+  - apiVersion: v2
+    created: "2024-10-08T14:58:56.282185742+01:00"
+    description: This is an example chart for a chatbot application based on the AI
+      RHDH Software template approach. For more information please check https://github.com/redhat-ai-dev/ai-lab-template.git
+    digest: 81c4647a4f14b49b3dce1104150e08bdfbaf889fa371d05b38e705cf3509632e
+    name: chatbot-ai-software-template
+    tags: chatbot,python,llama.cpp
+    urls:
+    - https://github.com/thepetk/chatbot-test-chart-repo.git/chatbot-ai-software-template-0.0.1.tgz
+    version: 0.0.1
+generated: "2024-10-08T14:58:56.281816759+01:00"
