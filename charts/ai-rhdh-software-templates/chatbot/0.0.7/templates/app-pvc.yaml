@@ -4,9 +4,9 @@ kind: PersistentVolumeClaim
 metadata:
   labels: 
     app.kubernetes.io/instance: {{ .Values.name }}
-    app.kubernetes.io/managed-by: kustomize
     app.kubernetes.io/name: {{ .Values.name }} 
   name: {{ .Values.name}}
+  namespace: {{ .Values.namespace }}
 spec:
   accessModes:
     - ReadWriteOnce

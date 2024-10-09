@@ -8,10 +8,10 @@ metadata:
     tad.gitops.get/replicas: ".spec.replicas" 
   labels: 
     app.kubernetes.io/instance: {{ .Values.name }}
-    app.kubernetes.io/managed-by: kustomize
     app.kubernetes.io/name:  {{ .Values.name }}
     app.kubernetes.io/part-of: {{ .Values.name }}  
   name: {{ .Values.name }}
+  namespace: {{ .Values.namespace }}
 spec:
   replicas: 1
   selector:

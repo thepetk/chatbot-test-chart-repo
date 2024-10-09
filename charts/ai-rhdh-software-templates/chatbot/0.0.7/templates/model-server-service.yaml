@@ -3,9 +3,9 @@ kind: Service
 metadata: 
   labels: 
     app.kubernetes.io/instance: {{ .Values.name }}-model-server
-    app.kubernetes.io/managed-by: kustomize
     app.kubernetes.io/name: {{ .Values.name }}-model-server
   name: {{ .Values.name }}-model-server
+  namespace: {{ .Values.namespace }}
 spec:
   ports:
   - port: {{ .Values.modelServicePort }}

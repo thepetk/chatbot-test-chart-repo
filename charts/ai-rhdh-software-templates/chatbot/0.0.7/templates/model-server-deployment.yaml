@@ -3,10 +3,10 @@ kind: Deployment
 metadata:
   labels: 
     app.kubernetes.io/instance: {{ .Values.name }}-model-server
-    app.kubernetes.io/managed-by: kustomize
     app.kubernetes.io/name: {{ .Values.name }}-model-server
     app.kubernetes.io/part-of: {{ .Values.name }}  
   name: {{ .Values.name }}-model-server
+  namespace: {{ .Values.namespace }}
 spec:
   replicas: 1
   selector:
@@ -35,6 +35,7 @@ spec:
         - name: CHAT_FORMAT
           value: openchat
         image: {{ .Values.modelServiceContainer }}
+        name: model-service
         volumeMounts:
         - name: model-file
           mountPath: /model
