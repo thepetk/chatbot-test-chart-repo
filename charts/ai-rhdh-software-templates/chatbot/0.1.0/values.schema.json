@@ -34,7 +34,7 @@
             "description": "The path of the model file inside the model server container, if left blank a value will be defaulted to '/model/model.file'."
         },
         "modelServerContainer": {
-            "type": "integer",
+            "type": "string",
             "description": "The image used for the model server, if left blank a value will be defaulted to 'quay.io/ai-lab/llamacpp_python:latest'."
         }
     }
