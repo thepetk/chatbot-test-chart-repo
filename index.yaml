@@ -10,5 +10,5 @@ entries:
     tags: chatbot,python,llama.cpp
     urls:
     - https://raw.githubusercontent.com/thepetk/chatbot-test-chart-repo/refs/heads/main/chatbot-ai-software-template-0.0.1.tgz
-    version: 0.0.3
+    version: 0.0.4
 generated: "2024-10-08T14:58:56.281816759+01:00"

@@ -10,8 +10,32 @@
             "type": "string"
         },
         "modelServicePort": {
-            "type": "int",
+            "type": "integer",
             "description": "The exposed port of the model server, if left blank a value will be defaulted to 8001."
+        },
+        "appPort": {
+            "type": "integer",
+            "description": "The exposed port of the chatbot application server, if left blank a value will be defaulted to 8501."
+        },
+        "initContainer": {
+            "type": "string",
+            "description": "The image used for the initContainer of the chatbot app deployment, if left blank a value will be defaulted to 'quay.io/redhat-ai-dev/granite-7b-lab:latest'."
+        },
+        "appContainer": {
+            "type": "string",
+            "description": "The image used for the chatbot application interface, if left blank a value will be defaulted to 'quay.io/redhat-ai-dev/chatbot:latest'."
+        },
+        "modelInitCommand": {
+            "type": "string",
+            "description": "The command of the model server initContainer, if left blank a value will be defaulted to ['/usr/bin/install', '/model/model.file', '/shared/']."
+        },
+        "modelPath": {
+            "type": "string",
+            "description": "The path of the model file inside the model server container, if left blank a value will be defaulted to '/model/model.file'."
+        },
+        "modelServerContainer": {
+            "type": "integer",
+            "description": "The image used for the model server, if left blank a value will be defaulted to 'quay.io/ai-lab/llamacpp_python:latest'."
         }
     }
 }
