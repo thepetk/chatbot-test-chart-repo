@@ -25,6 +25,9 @@ spec:
       containers:
       - image:  {{ .Values.appContainer }}
         name: app-inference
+        envFrom:
+        - configMapRef:
+            name: ${{ values.name }}-model-config
         ports:
         - containerPort: {{ .Values.appPort }}
         securityContext:
