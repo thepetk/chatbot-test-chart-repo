@@ -2,42 +2,42 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels: 
-    app.kubernetes.io/instance: {{ .Values.name }}-model-server
-    app.kubernetes.io/name: {{ .Values.name }}-model-server
-    app.kubernetes.io/part-of: {{ .Values.name }}  
-  name: {{ .Values.name }}-model-server
-  namespace: {{ .Values.namespace }}
+    app.kubernetes.io/instance: {{ .Values.application.name }}-model-server
+    app.kubernetes.io/name: {{ .Values.application.name }}-model-server
+    app.kubernetes.io/part-of: {{ .Values.application.name }}  
+  name: {{ .Values.application.name }}-model-server
+  namespace: {{ .Values.application.namespace }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/instance: {{ .Values.name }}-model-server 
+      app.kubernetes.io/instance: {{ .Values.application.name }}-model-server 
   template:
     metadata: 
       labels:
-        app.kubernetes.io/instance: {{ .Values.name }}-model-server
+        app.kubernetes.io/instance: {{ .Values.application.name }}-model-server
     spec:
-      {%- if .Values.modelServiceType == "llama.cpp" %}
+      {%- if .Values.model.modelServiceType == "llama.cpp" %}
       initContainers:
       - name: model-file
-        image: {{ .Values.initContainer }}
-        command: {{ .Values.modelInitCommand }}
+        image: {{ .Values.model.initContainer }}
+        command: {{ .Values.model.modelInitCommand }}
         volumeMounts:
         - name: model-file
           mountPath: /shared
       {%- endif %}
       containers:
-      {%- if .Values.modelServiceType == "vllm" %}
+      {%- if .Values.model.modelServiceType == "vllm" %}
       - image: 
         args: [
             "--model",
-            "{{ .Values.modelName }}",
+            "{{ .Values.model.modelName }}",
             "--port",
-            "{{ .Values.modelServicePort }}",
+            "{{ .Values.model.modelServicePort }}",
             "--download-dir",
             "/models-cache",
             "--max-model-len",
-            "{{ .Values.modelMaxLength }}"]
+            "{{ .Values.model.modelMaxLength }}"]
         resources:
           limits:
             nvidia.com/gpu: '1'
@@ -51,12 +51,12 @@ spec:
         - name: HOST
           value: "0.0.0.0"
         - name: PORT
-          value: "{{ .Values.modelServicePort }}"
+          value: "{{ .Values.model.modelServicePort }}"
         - name: MODEL_PATH
-          value: {{ .Values.modelPath }}
+          value: {{ .Values.model.modelPath }}
         - name: CHAT_FORMAT
           value: openchat
-        image: {{ .Values.modelServiceContainer }}
+        image: {{ .Values.model.modelServiceContainer }}
         name: model-service
         volumeMounts:
         - name: model-file
@@ -64,10 +64,10 @@ spec:
       {%- endif %}
         name: app-model-service
         ports:
-        - containerPort: {{ .Values.modelServicePort }}
+        - containerPort: {{ .Values.model.modelServicePort }}
         securityContext:
           runAsNonRoot: true
-      {%- if .Values.modelServiceType == "vllm" %}
+      {%- if .Values.model.modelServiceType == "vllm" %}
       volumes:
       - name: dshm
         emptyDir:
@@ -75,7 +75,7 @@ spec:
           sizeLimit: "2Gi"
       - name: models-cache
         persistentVolumeClaim:
-          claimName: {{ .Values.name }}
+          claimName: {{ .Values.application.name }}
 
       tolerations:
         - key: nvidia.com/gpu

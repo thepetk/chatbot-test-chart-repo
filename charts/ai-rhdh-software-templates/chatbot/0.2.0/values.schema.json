@@ -16,6 +16,10 @@
                 "appPort": {
                     "type": "integer",
                     "description": "The exposed port of the chatbot application, if left blank a value will be defaulted to 8501."
+                },
+                "appContainer": {
+                    "type": "string",
+                    "description": "The image used for the chatbot application interface, if left blank a value will be defaulted to 'quay.io/redhat-ai-dev/chatbot:latest'."
                 }
             }
         },
@@ -35,6 +39,10 @@
                     "type": "string",
                     "description": "The image used for the model server, if left blank a value will be defaulted to 'quay.io/ai-lab/llamacpp_python:latest'."
                 },
+                "initContainer": {
+                    "type": "string",
+                    "description": "The image used for the initContainer of the chatbot app deployment, if left blank a value will be defaulted to 'quay.io/redhat-ai-dev/granite-7b-lab:latest'."
+                },
                 "modelInitCommand": {
                     "type": "string",
                     "description": "The command of the model server initContainer, if left blank a value will be defaulted to ['/usr/bin/install', '/model/model.file', '/shared/']. Is used only for the llama.cpp model service case."
@@ -44,11 +52,15 @@
                     "description": "The path of the model file inside the model server container, if left blank a value will be defaulted to '/model/model.file'."
                 },
                 "modelName": {
-                    "type": ["string", "null"],
+                    "type": "string",
                     "description": "The name of the model inside the given vllm service. Only used for vllm model service type."
                 },
                 "modelMaxLength": {
-                    "type": ["integer", "null"],
+                    "type": "integer",
+                    "description": "The maximum length of tokens used for the vllm service. Only used for vllm model service type."
+                },
+                "vllmseServiceContainer": {
+                    "type": "string",
                     "description": "The maximum length of tokens used for the vllm service. Only used for vllm model service type."
                 }
             }

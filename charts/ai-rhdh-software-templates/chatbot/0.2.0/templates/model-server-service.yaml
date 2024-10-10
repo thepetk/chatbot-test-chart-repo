@@ -2,14 +2,14 @@ apiVersion: v1
 kind: Service
 metadata: 
   labels: 
-    app.kubernetes.io/instance: {{ .Values.name }}-model-server
-    app.kubernetes.io/name: {{ .Values.name }}-model-server
-  name: {{ .Values.name }}-model-server
-  namespace: {{ .Values.namespace }}
+    app.kubernetes.io/instance: {{ .Values.application.name }}-model-server
+    app.kubernetes.io/name: {{ .Values.application.name }}-model-server
+  name: {{ .Values.application.name }}-model-server
+  namespace: {{ .Values.application.namespace }}
 spec:
   ports:
-  - port: {{ .Values.modelServicePort }}
+  - port: {{ .Values.model.modelServicePort }}
     protocol: TCP
-    targetPort: {{ .Values.modelServicePort }}
+    targetPort: {{ .Values.model.modelServicePort }}
   selector:
-    app.kubernetes.io/instance: {{ .Values.name }}-model-server
+    app.kubernetes.io/instance: {{ .Values.application.name }}-model-server

@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ .Values.name }}-model-config
-  namespace: {{ .Values.namespace }}
+  name: {{ .Values.application.name }}-model-config
+  namespace: {{ .Values.application.namespace }}
 data:
-  MODEL_ENDPOINT: "http://{{ .Values.name }}-model-server:{{ .Values.modelServicePort }}"
-  {%- if .Values.modelServiceType == "vllm" %}
-  MODEL_NAME: "{{ .Values.modelName }}"
+  MODEL_ENDPOINT: "http://{{ .Values.application.name }}-model-server:{{ .Values.model.modelServicePort }}"
+  {%- if .Values.model.modelServiceType == "vllm" %}
+  MODEL_NAME: "{{ .Values.model.modelName }}"
   {%- endif %}
