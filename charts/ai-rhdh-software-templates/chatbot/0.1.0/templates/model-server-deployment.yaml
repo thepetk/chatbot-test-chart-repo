@@ -39,6 +39,11 @@ spec:
         volumeMounts:
         - name: model-file
           mountPath: /model
+        name: app-model-service
+        ports:
+        - containerPort: {{ .Values.model.modelServicePort }}
+        securityContext:
+          runAsNonRoot: true
       volumes:
       - name: model-file
         emptyDir: {}
