@@ -1,0 +1,5 @@
+apiVersion: v2
+description: This is an example chart for a chatbot application based on the AI RHDH Software template approach. For more information please check https://github.com/redhat-ai-dev/ai-lab-template.git
+name: chatbot-ai-software-template
+tags: chatbot,python,llama.cpp
+version: 0.1.0

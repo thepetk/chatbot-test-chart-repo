@@ -1,0 +1,58 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "type": "object",
+    "properties": {
+        "application": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "The name assigned to all of the frontend objects defined in this template."
+                },
+                "namespace": {
+                    "type": ["string", "null"],
+                    "description": "The namespace that the application will be deployed, if blank the current namespace will be used."
+                },
+                "appPort": {
+                    "type": "integer",
+                    "description": "The exposed port of the chatbot application server, if left blank a value will be defaulted to 8501."
+                }
+            }
+        },
+        "model": {
+            "type": "object",
+            "properties": {
+                "modelServicePort": {
+                    "type": "integer",
+                    "description": "The exposed port of the model server, if left blank a value will be defaulted to 8001."
+                },       
+                "modelServerType": {
+                    "type": "string",
+                    "description": "The model server type used for the deployment, defaults to llama.cpp",
+                    "enum": [ "llama.cpp", "vllm"]
+                },
+                "modelServerContainer": {
+                    "type": "string",
+                    "description": "The image used for the model server, if left blank a value will be defaulted to 'quay.io/ai-lab/llamacpp_python:latest'."
+                },
+                "modelInitCommand": {
+                    "type": "string",
+                    "description": "The command of the model server initContainer, if left blank a value will be defaulted to ['/usr/bin/install', '/model/model.file', '/shared/']."
+                },
+                "modelPath": {
+                    "type": "string",
+                    "description": "The path of the model file inside the model server container, if left blank a value will be defaulted to '/model/model.file'."
+                },
+                "modelName": {
+                    "type": ["string", "null"],
+                    "description": "The name of the model inside the given vllm service. Only used for vllm model server type."
+                },
+                "modelMaxLength": {
+                    "type": "integer",
+                    "description": "The exposed port of the model server, if left blank a value will be defaulted to 8001."
+                }
+            }
+        }
+    }
+}
+
