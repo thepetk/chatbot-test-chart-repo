@@ -19,4 +19,4 @@ model:
   # vllm-only values
   modelName: "instructlab/granite-7b-lab"
   modelMaxLength: 4096
-  vllmseServiceContainer: "quay.io/rh-aiservices-bu/vllm-openai-ubi9:0.4.2"
+  vllmServiceContainer: "quay.io/rh-aiservices-bu/vllm-openai-ubi9:0.4.2"
