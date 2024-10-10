@@ -41,7 +41,7 @@ spec:
           mountPath: /model
         name: app-model-service
         ports:
-        - containerPort: {{ .Values.model.modelServicePort }}
+        - containerPort: {{ .Values.modelServicePort }}
         securityContext:
           runAsNonRoot: true
       volumes:
