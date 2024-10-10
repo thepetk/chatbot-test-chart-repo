@@ -5,6 +5,6 @@ metadata:
   namespace: {{ .Values.application.namespace }}
 data:
   MODEL_ENDPOINT: "http://{{ .Values.application.name }}-model-server:{{ .Values.model.modelServicePort }}"
-  {%- if .Values.model.modelServiceType == "vllm" %}
+  {{ if eq .Values.model.modelServiceType "vllm" }}
   MODEL_NAME: "{{ .Values.model.modelName }}"
-  {%- endif %}
+  {{ end }}

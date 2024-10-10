@@ -17,7 +17,7 @@ spec:
       labels:
         app.kubernetes.io/instance: {{ .Values.application.name }}-model-server
     spec:
-      {%- if .Values.model.modelServiceType == "llama.cpp" %}
+      {{ if eq .Values.model.modelServiceType "llama.cpp" }}
       initContainers:
       - name: model-file
         image: {{ .Values.model.initContainer }}
@@ -25,9 +25,9 @@ spec:
         volumeMounts:
         - name: model-file
           mountPath: /shared
-      {%- endif %}
+      {{ end }}
       containers:
-      {%- if .Values.model.modelServiceType == "vllm" %}
+      {{ if eq .Values.model.modelServiceType "vllm" }}
       - image: 
         args: [
             "--model",
@@ -46,7 +46,7 @@ spec:
           mountPath: /dev/shm
         - name: models-cache
           mountPath: /models-cache
-      {%- else %}
+      {{ else }}
       - env:
         - name: HOST
           value: "0.0.0.0"
@@ -61,13 +61,13 @@ spec:
         volumeMounts:
         - name: model-file
           mountPath: /model
-      {%- endif %}
+      {{ end }}
         name: app-model-service
         ports:
         - containerPort: {{ .Values.model.modelServicePort }}
         securityContext:
           runAsNonRoot: true
-      {%- if .Values.model.modelServiceType == "vllm" %}
+      {{ if eq .Values.model.modelServiceType "vllm" }}
       volumes:
       - name: dshm
         emptyDir:
@@ -81,8 +81,8 @@ spec:
         - key: nvidia.com/gpu
           operator: Exists
           effect: NoSchedule
-      {%- else %}
+      {{ else }}
       volumes:
       - name: model-file
         emptyDir: {}
-      {%- endif %}
+      {{ end }}
