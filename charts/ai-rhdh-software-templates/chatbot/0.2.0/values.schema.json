@@ -35,7 +35,7 @@
                     "description": "The model service type used for the deployment, defaults to llama.cpp",
                     "enum": [ "llama.cpp", "vllm"]
                 },
-                "vllmseServiceContainer": {
+                "modelServiceContainer": {
                     "type": "string",
                     "description": "The image used for the model server, if left blank a value will be defaulted to 'quay.io/ai-lab/llamacpp_python:latest'."
                 },
@@ -59,7 +59,7 @@
                     "type": "integer",
                     "description": "The maximum length of tokens used for the vllm service. Only used for vllm model service type."
                 },
-                "vllmseServiceContainer": {
+                "vllmServiceContainer": {
                     "type": "string",
                     "description": "The image used for the vllm model service, if left blank a value will be defaulted to 'quay.io/rh-aiservices-bu/vllm-openai-ubi9:0.4.2'."
                 }
