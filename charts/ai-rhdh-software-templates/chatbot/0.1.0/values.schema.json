@@ -15,7 +15,7 @@
         },
         "appPort": {
             "type": "integer",
-            "description": "The exposed port of the chatbot application server, if left blank a value will be defaulted to 8501."
+            "description": "The exposed port of the chatbot application, if left blank a value will be defaulted to 8501."
         },
         "initContainer": {
             "type": "string",

@@ -15,7 +15,7 @@
                 },
                 "appPort": {
                     "type": "integer",
-                    "description": "The exposed port of the chatbot application server, if left blank a value will be defaulted to 8501."
+                    "description": "The exposed port of the chatbot application, if left blank a value will be defaulted to 8501."
                 }
             }
         },
@@ -26,9 +26,9 @@
                     "type": "integer",
                     "description": "The exposed port of the model server, if left blank a value will be defaulted to 8001."
                 },       
-                "modelServerType": {
+                "modelServiceType": {
                     "type": "string",
-                    "description": "The model server type used for the deployment, defaults to llama.cpp",
+                    "description": "The model service type used for the deployment, defaults to llama.cpp",
                     "enum": [ "llama.cpp", "vllm"]
                 },
                 "modelServerContainer": {
@@ -37,7 +37,7 @@
                 },
                 "modelInitCommand": {
                     "type": "string",
-                    "description": "The command of the model server initContainer, if left blank a value will be defaulted to ['/usr/bin/install', '/model/model.file', '/shared/']."
+                    "description": "The command of the model server initContainer, if left blank a value will be defaulted to ['/usr/bin/install', '/model/model.file', '/shared/']. Is used only for the llama.cpp model service case."
                 },
                 "modelPath": {
                     "type": "string",
@@ -45,11 +45,11 @@
                 },
                 "modelName": {
                     "type": ["string", "null"],
-                    "description": "The name of the model inside the given vllm service. Only used for vllm model server type."
+                    "description": "The name of the model inside the given vllm service. Only used for vllm model service type."
                 },
                 "modelMaxLength": {
                     "type": ["integer", "null"],
-                    "description": "The maximum length of tokens used for the vllm service. Only used for vllm model server type."
+                    "description": "The maximum length of tokens used for the vllm service. Only used for vllm model service type."
                 }
             }
         }
