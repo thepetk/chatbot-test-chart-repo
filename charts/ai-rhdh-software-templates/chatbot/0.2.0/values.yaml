@@ -4,9 +4,9 @@ appPort: 8501
 modelServicePort: 8001
 initContainer: "quay.io/redhat-ai-dev/granite-7b-lab:latest"
 appContainer: "quay.io/redhat-ai-dev/chatbot:latest"
-modelServerType: "llama.cpp" 
+modelServiceType: "llama.cpp" 
 modelInitCommand: "['/usr/bin/install', '/model/model.file', '/shared/']"
 modelPath: "/model/model.file"
-modelName: ""
+modelName: "instructlab/granite-7b-lab"
 modelMaxLength: 4096
 modelServiceContainer: "quay.io/ai-lab/llamacpp_python:latest"
