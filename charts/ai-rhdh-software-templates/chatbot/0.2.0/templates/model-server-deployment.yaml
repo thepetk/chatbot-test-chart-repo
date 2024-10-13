@@ -28,7 +28,7 @@ spec:
       {{ end }}
       containers:
       {{ if eq .Values.model.modelServiceType "vllm" }}
-      - image: 
+      - image: {{ .Values.model.vllmServiceContainer }}
         args: [
             "--model",
             "{{ .Values.model.modelName }}",
