@@ -64,6 +64,23 @@
                     "description": "The image used for the vllm model service, if left blank a value will be defaulted to 'quay.io/rh-aiservices-bu/vllm-openai-ubi9:0.4.2'."
                 }
             }
+        },
+        "gitops": {
+            "type": "object",
+            "properties": {
+                "gitSecretName": {
+                    "type": "string",
+                    "description": "The name of the secret for the github token."
+                },
+                "gitSecretTokenName": {
+                    "type": "string",
+                    "description": "The name of the key for the github token."
+                },
+                "githubOrgName": {
+                    "type": "string",
+                    "description": "The github organization that the repos will be created"
+                }
+            }
         }
     }
 }
