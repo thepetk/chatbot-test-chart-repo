@@ -78,7 +78,15 @@
                 },
                 "githubOrgName": {
                     "type": "string",
-                    "description": "The github organization that the repos will be created"
+                    "description": "The github organization that the repos will be created."
+                },
+                "gitSourceRepo": {
+                    "type": "string",
+                    "description": "The github repo we will take the content from."
+                },
+                "gitDefaultBranch": {
+                    "type": "string",
+                    "description": "he created github repos default branch names."
                 }
             }
         }

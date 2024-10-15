@@ -14,8 +14,7 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.gitops.gitSecretName }}
                   key: {{ .Values.gitops.gitSecretTokenName }}
-            - name: GITHUB_REPO_NAMES
-              value: "{{ .Values.application.name }},{{ .Values.application.name }}-gitops"
-            - name: GITHUB_ORG_NAME
-              value: {{ .Values.gitops.githubOrgName }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Values.application.name }}-model-config
       restartPolicy: Never

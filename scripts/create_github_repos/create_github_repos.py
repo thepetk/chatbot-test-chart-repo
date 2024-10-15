@@ -75,6 +75,7 @@ class GithubClient:
         target_repo: Repository,
         source_path: str = "",
         target_path: str = "",
+        initial_source: str = "",
     ) -> bool:
         _src_contents = source_repo.get_contents(source_path)
         _new_blobs: list[GithubBlob] = []
@@ -85,15 +86,16 @@ class GithubClient:
                     target_path, content_file.path
                 )
                 _ = self._copy_contents_from_source(
-                    source_repo, target_repo, content_file.path, new_target_path
+                    source_repo,
+                    target_repo,
+                    content_file.path,
+                    new_target_path,
+                    initial_source,
                 )
             else:
                 file_content = base64.b64decode(content_file.content).decode("utf-8")
-                blob_path = content_file.path.replace(f"{source_path}/", "")
+                blob_path = content_file.path.replace(f"{initial_source}/", "")
                 _new_blobs.append(GithubBlob(path=blob_path, content=file_content))
-        import pdb
-
-        pdb.set_trace()
 
         _r = self._commit_new_files(_new_blobs, target_repo)
         return _r
@@ -124,9 +126,7 @@ class GithubClient:
         _source_repo = self.gh.get_repo(source_repo)
 
         _ = self._copy_contents_from_source(
-            _source_repo,
-            _target_repo,
-            source_repo_path,
+            _source_repo, _target_repo, source_repo_path, "", source_repo_path
         )
         return True
 

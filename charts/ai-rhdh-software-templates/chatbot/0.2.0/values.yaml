@@ -25,4 +25,6 @@ gitops:
   # github secrets
   gitSecretName: "github-secrets"
   gitSecretTokenName: "GITHUB_TOKEN"
-  githubOrgName: "fpetk"
+  gitSourceRepo: "thepetk/chatbot-test-chart-repo"
+  gitDefaultBranch: "main"
+  githubOrgName: ""
