@@ -1,6 +1,6 @@
 
 application:
-  name: "helm-chart-chatbot1"
+  name: "helm-chart-chatbot2-local"
   namespace: "ai-software-templates-dev"
   appPort: 8501
   appContainer: "quay.io/redhat-ai-dev/chatbot:latest"
@@ -22,7 +22,6 @@ model:
   vllmServiceContainer: "quay.io/rh-aiservices-bu/vllm-openai-ubi9:0.4.2"
 
 gitops:
-  # github secrets
   gitSecretName: "github-secrets"
   gitSecretTokenName: "GITHUB_TOKEN"
   gitSourceRepo: "thepetk/chatbot-test-chart-repo"

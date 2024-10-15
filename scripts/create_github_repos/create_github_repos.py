@@ -145,4 +145,4 @@ if __name__ == "__main__":
         SOURCE_REPO_GITOPS_CONTENT_PATH,
         GITHUB_SOURCE_REPO,
     )
-    print(f"Successfully created 2 repos.")
+    print("Successfully created 2 repos.")
