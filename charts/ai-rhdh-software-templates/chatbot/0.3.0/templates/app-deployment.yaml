@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:  
+    tad.gitops.set/image: ".spec.template.spec.containers[0].image"
+    tad.gitops.get/image: ".spec.template.spec.containers[0].image"
+    tad.gitops.set/replicas: ".spec.replicas"
+    tad.gitops.get/replicas: ".spec.replicas" 
+  labels: 
+    app.kubernetes.io/instance: {{ .Values.application.name }}
+    app.kubernetes.io/name:  {{ .Values.application.name }}
+    app.kubernetes.io/part-of: {{ .Values.application.name }}  
+  name: {{ .Values.application.name }}
+  namespace: {{ .Values.application.namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance:  {{ .Values.application.name }} 
+  template:
+    metadata: 
+      labels:
+        app.kubernetes.io/instance:  {{ .Values.application.name }}
+    spec:
+      containers:
+      - image:  {{ .Values.application.appContainer }}
+        name: app-inference
+        envFrom:
+        - configMapRef:
+            name: {{ .Values.application.name }}-model-config
+        ports:
+        - containerPort: {{ .Values.application.appPort }}
+        securityContext:
+          runAsNonRoot: true

@@ -2,23 +2,33 @@ apiVersion: v1
 entries:
   chatbot-ai-software-template:
   - apiVersion: v2
-    created: "2024-10-10T15:58:18.965719802+01:00"
+    created: "2024-10-17T13:23:59.951940869+01:00"
     description: This is an example chart for a chatbot application based on the AI
       RHDH Software template approach. For more information please check https://github.com/redhat-ai-dev/ai-lab-template.git
-    digest: 4283a6d4b4710ae97e39967440b083565d3059cda897d4a4f34e65b4ea4b2304
+    digest: 79a2f4d32de4e1af6929437b9456789f5e1739f50e4a328c43c82ac7ae698bee
     name: chatbot-ai-software-template
     tags: chatbot,python,llama.cpp,vllm
     urls:
-    - https://raw.githubusercontent.com/thepetk/chatbot-test-chart-repo/refs/heads/gh-pages/chatbot-ai-software-template-0.2.0.tgz
-    version: 0.2.0
+    - chatbot-ai-software-template-0.3.0.tgz
+    version: 0.3.0
   - apiVersion: v2
-    created: "2024-10-10T15:58:18.965509512+01:00"
+    created: "2024-10-17T13:23:59.951596811+01:00"
     description: This is an example chart for a chatbot application based on the AI
       RHDH Software template approach. For more information please check https://github.com/redhat-ai-dev/ai-lab-template.git
-    digest: 87b2988a4a2513d637a62059a556fb0bfa38306e6aadb20b331151c5d0ec5b17
+    digest: ec0960ab8c0d64843a5d770c24a8ccfcf407006d7d04812f39d163540da42ae9
+    name: chatbot-ai-software-template
+    tags: chatbot,python,llama.cpp,vllm
+    urls:
+    - chatbot-ai-software-template-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
+    created: "2024-10-17T13:23:59.950955544+01:00"
+    description: This is an example chart for a chatbot application based on the AI
+      RHDH Software template approach. For more information please check https://github.com/redhat-ai-dev/ai-lab-template.git
+    digest: 0ddb61b30923273e128c4ef97224141f51e8b98cd62d47918aa922553d438ab4
     name: chatbot-ai-software-template
     tags: chatbot,python,llama.cpp
     urls:
-    - https://raw.githubusercontent.com/thepetk/chatbot-test-chart-repo/refs/heads/gh-pages/chatbot-ai-software-template-0.1.0.tgz
+    - chatbot-ai-software-template-0.1.0.tgz
     version: 0.1.0
-generated: "2024-10-10T15:58:18.96522986+01:00"
+generated: "2024-10-17T13:23:59.95064602+01:00"

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels: 
+    app.kubernetes.io/instance: {{ .Values.application.name }}-app-config
+    app.kubernetes.io/name:  {{ .Values.application.name }}-app-config
+    app.kubernetes.io/part-of: {{ .Values.application.name }}
+  name: {{ .Values.application.name }}-app-config
+  namespace: {{ .Values.application.namespace }}  
+data:
+  GITHUB_ORG_NAME: "{{ .Values.gitops.githubOrgName }}"
+  GITHUB_APP_REPO: "{{ .Values.gitops.githubOrgName }}/{{ .Values.application.name }}"
+  GITHUB_GITOPS_REPO: "{{ .Values.gitops.githubOrgName }}/{{ .Values.application.name }}-gitops"
+  GITHUB_SOURCE_REPO: "{{ .Values.gitops.gitSourceRepo }}"
+  GITHUB_DEFAULT_BRANCH: "{{ .Values.gitops.gitDefaultBranch }}"

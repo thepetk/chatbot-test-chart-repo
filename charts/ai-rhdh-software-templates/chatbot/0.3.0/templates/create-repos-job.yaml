@@ -1,0 +1,25 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  labels: 
+    app.kubernetes.io/instance: {{ .Values.application.name }}-github-repo-creator
+    app.kubernetes.io/name:  {{ .Values.application.name }}-github-repo-creator
+    app.kubernetes.io/part-of: {{ .Values.application.name }}
+  namespace: {{ .Values.application.namespace }}  
+  name: {{ .Values.application.name }}-github-repo-creator
+spec:
+  template:
+    spec:
+      containers:
+        - name: repo-creator
+          image: quay.io/tpetkos/create-github-repos:latest
+          env:
+            - name: GITHUB_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.gitops.gitSecretName }}
+                  key: {{ .Values.gitops.gitSecretTokenName }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Values.application.name }}-app-config
+      restartPolicy: Never
