@@ -1,6 +1,6 @@
 
 application:
-  name: "helm-chart-chatbot3-local"
+  name: "helm-chart-chatbot"
   namespace: "test-chatbot"
   appPort: 8501
   appContainer: "quay.io/redhat-ai-dev/chatbot:latest"
