@@ -15,7 +15,14 @@ model:
 
 gitops:
   gitSecretName: "github-secrets"
-  gitSecretTokenName: "GITHUB_TOKEN"
+  gitSecretKeyToken: "GITHUB_TOKEN"
+  gitSecretKeyAppId: "GITHUB_APP_APP_ID"
+  gitSecretKeyClientId: "GITHUB_APP_CLIENT_ID"
+  gitSecretKeyClientSecret: "GITHUB_APP_CLIENT_SECRET"
+  gitSecretKeyWebhookURL: "GITHUB_APP_WEBHOOK_URL"
+  gitSecretKeyWebhookSecret: "GITHUB_APP_WEBHOOK_SECRET"
+  gitSecretKeyPrivateKey: "GITHUB_APP_PRIVATE_KEY"
+  gitSecretKeyQuayDockerConfigJSON: "QUAY_DOCKERCONFIGJSON"
   gitSourceRepo: "thepetk/chatbot-test-chart-repo"
   gitDefaultBranch: "main"
   githubOrgName: ""
