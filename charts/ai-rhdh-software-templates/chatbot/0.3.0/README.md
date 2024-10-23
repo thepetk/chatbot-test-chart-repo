@@ -31,10 +31,17 @@ Below is a table of each value used to configure this chart.
 
 ### Gitops
 
-| Value                | Description                                            | Default                            | Additional Information |
-| -------------------- | ------------------------------------------------------ | ---------------------------------- | ---------------------- |
-| `gitSecretName`      | The name of the secret for the github token.           | `git-secrets`                      |                        |
-| `gitSecretTokenName` | The name of the key for the github token.              | `GITHUB_TOKEN`                     |                        |
-| `githubOrgName`      | The github organization that the repos will be created |                                    |                        |
-| `gitSourceRepo`      | The github repo we will take the content from          | `"thepetk/chatbot-test-chart-repo` |                        |
-| `gitDefaultBranch`   | The created github repos default branch names          | `main`                             |                        |
+| Value                              | Description                                                  | Default                            | Additional Information |
+| ---------------------------------- | ------------------------------------------------------------ | ---------------------------------- | ---------------------- |
+| `gitSecretName`                    | The name of the secret for the github token.                 | `git-secrets`                      |                        |
+| `gitSecretKeyToken`                | The name of the key for the github token value.              | `GITHUB_TOKEN`                     |                        |
+| `gitSecretKeyAppId`                | The name of the key for the github app app_id value.         | `GITHUB_APP_APP_ID`                |                        |
+| `gitSecretKeyClientId`             | The name of the key for the github app client_id value.      | `GITHUB_APP_CLIENT_ID`             |                        |
+| `gitSecretKeyClientSecret`         | The name of the key for the github app client_secret value.  | `GITHUB_APP_CLIENT_SECRET`         |                        |
+| `gitSecretKeyWebhookURL`           | The name of the key for the github app webhook_url value.    | `GITHUB_APP_WEBHOOK_URL`           |                        |
+| `gitSecretKeyWebhookSecret`        | The name of the key for the github app webhook_secret value. | `GITHUB_APP_WEBHOOK_SECRET`        |
+| `gitSecretKeyPrivateKey`           | The name of the key for the github app private_key value.    | `GITHUB_APP_PRIVATE_KEY`           |                        |
+| `gitSecretKeyQuayDockerConfigJSON` | The name of the key for the quay.io dockerConfig JSON value. | `QUAY_DOCKERCONFIGJSON`            |                        |
+| `githubOrgName`                    | The github organization that the repos will be created       |                                    |                        |
+| `gitSourceRepo`                    | The github repo we will take the content from                | `"thepetk/chatbot-test-chart-repo` |                        |
+| `gitDefaultBranch`                 | The created github repos default branch names                | `main`                             |                        |

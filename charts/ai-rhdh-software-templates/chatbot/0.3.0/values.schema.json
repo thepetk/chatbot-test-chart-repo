@@ -55,9 +55,37 @@
                     "type": "string",
                     "description": "The name of the secret for the github token."
                 },
-                "gitSecretTokenName": {
+                "gitSecretKeyToken": {
                     "type": "string",
-                    "description": "The name of the key for the github token."
+                    "description": "The name of the key for the github token value. Defaults to `GITHUB_TOKEN`."
+                },
+                "gitSecretKeyAppId": {
+                    "type": "string",
+                    "description": "The name of the key for the github app app_id value. Defaults to `GITHUB_APP_APP_ID`."
+                },
+                "gitSecretKeyClientId": {
+                    "type": "string",
+                    "description": "The name of the key for the github app client_id value. Defaults to `GITHUB_APP_CLIENT_ID`."
+                },
+                "gitSecretKeyClientSecret": {
+                    "type": "string",
+                    "description": "The name of the key for the github app client_secret value. Defaults to `GITHUB_APP_CLIENT_SECRET`."
+                },
+                "gitSecretKeyWebhookURL": {
+                    "type": "string",
+                    "description": "The name of the key for the github app webhook_url value. Defaults to `GITHUB_APP_WEBHOOK_URL`."
+                },
+                "gitSecretKeyWebhookSecret": {
+                    "type": "string",
+                    "description": "The name of the key for the github app webhook_secret value. Defaults to `GITHUB_APP_WEBHOOK_SECRET`."
+                },
+                "gitSecretKeyPrivateKey": {
+                    "type": "string",
+                    "description": "The name of the key for the github app private_key value. Defaults to `GITHUB_APP_PRIVATE_KEY`."
+                },
+                "gitSecretKeyQuayDockerConfigJSON": {
+                    "type": "string",
+                    "description": "The name of the key for the quay.io dockerConfig JSON value. Defaults to `QUAY_DOCKERCONFIGJSON`."
                 },
                 "githubOrgName": {
                     "type": "string",
