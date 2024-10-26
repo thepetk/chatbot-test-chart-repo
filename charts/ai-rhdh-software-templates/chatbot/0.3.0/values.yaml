@@ -1,6 +1,6 @@
 
 application:
-  name: "helm-chart-chatbot"
+  name: "helm-chart-chatbot-local-test-25104"
   namespace: "ai-software-templates-dev"
   appPort: 8501
   appContainer: "quay.io/redhat-ai-dev/chatbot:latest"
@@ -25,4 +25,4 @@ gitops:
   gitSecretKeyQuayDockerConfigJSON: "QUAY_DOCKERCONFIGJSON"
   gitSourceRepo: "thepetk/chatbot-test-chart-repo"
   gitDefaultBranch: "main"
-  githubOrgName: ""
+  githubOrgName: "fpetk"
