@@ -17,6 +17,7 @@ GITHUB_SOURCE_REPO = os.getenv("GITHUB_SOURCE_REPO")
 GITHUB_DEFAULT_BRANCH = os.getenv("GITHUB_DEFAULT_BRANCH")
 SOURCE_REPO_APP_CONTENT_PATH = "content"
 SOURCE_REPO_GITOPS_CONTENT_PATH = "charts/ai-rhdh-software-templates/chatbot/0.2.0"
+TEKTON_FILE_REPLACEMENT_STR = "application_replace_name"
 
 
 @dataclass
@@ -25,6 +26,8 @@ class GithubBlob:
     content: str
     btype: str = "blob"
     mode: str = "100644"
+    old_str: str = ""
+    new_str: str = ""
 
 
 class GithubClient:
@@ -45,13 +48,29 @@ class GithubClient:
             else target_file_path
         )
 
+    def _is_tekton_file(self, path: str) -> bool:
+        return ".tekton/docker-push.yaml" in path
+
+    def _update_tekton_yaml_content(
+        self,
+        content: str,
+        old_str: str = TEKTON_FILE_REPLACEMENT_STR,
+        new_str: str = GITHUB_APP_REPO,
+    ) -> str:
+        return content.replace(old_str, new_str)
+
     def _commit_new_files(
         self, blobs: list[GithubBlob], target_repo: Repository
     ) -> bool:
         _gh_tree_elements: list[InputGitTreeElement] = []
 
         for blob in blobs:
-            _gh_blob = target_repo.create_git_blob(blob.content, "utf-8")
+            content = (
+                blob.content
+                if self._is_tekton_file(blob.path)
+                else self._update_tekton_yaml_content(blob.content)
+            )
+            _gh_blob = target_repo.create_git_blob(content, "utf-8")
             _gh_tree_elements.append(
                 InputGitTreeElement(
                     path=blob.path, mode=blob.mode, type=blob.btype, sha=_gh_blob.sha
