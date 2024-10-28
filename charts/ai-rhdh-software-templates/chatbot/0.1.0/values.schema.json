@@ -2,40 +2,89 @@
     "$schema": "http://json-schema.org/schema#",
     "type": "object",
     "properties": {
-        "name": {
-            "type": "string",
-            "description": "The name assigned to all of the frontend objects defined in this template."
+        "application": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "The name of the application, if blank it defaults to 'chatbot-helm-chart'.",
+                    "default": "chatbot-helm-chart"
+                },
+                "namespace": {
+                    "type": ["string", "null"],
+                    "description": "The namespace that the application will be deployed, if blank it defaults to 'ai-software-templates-dev'.",
+                    "default": "ai-software-templates-dev"
+                },
+                "appPort": {
+                    "type": "integer",
+                    "description": "The exposed port of the application, if blank it defaults to 8501.",
+                    "default": 8501
+                },
+                "appContainer": {
+                    "type": "string",
+                    "description": "The image used for the initial chatbot application interface, if blank it defaults to 'quay.io/redhat-ai-dev/chatbot:latest'.",
+                    "default": "quay.io/redhat-ai-dev/chatbot:latest"
+                }
+            }
         },
-        "namespace": {
-            "type": "string"
+        "model": {
+            "type": "object",
+            "properties": {
+                "modelServicePort": {
+                    "type": "integer",
+                    "description": "The exposed port of the model service, if blank it defaults to 8001.",
+                    "default": 8001
+                },
+                "modelServiceContainer": {
+                    "type": "string",
+                    "description": "The image used for the model service, if blank it defaults to 'quay.io/ai-lab/llamacpp_python:latest'.",
+                    "default": "quay.io/ai-lab/llamacpp_python:latest"
+                },
+                "initContainer": {
+                    "type": "string",
+                    "description": "The image used for the initContainer of the model service deployment, if blank it defaults to 'quay.io/redhat-ai-dev/granite-7b-lab:latest'.",
+                    "default": "quay.io/redhat-ai-dev/granite-7b-lab:latest"
+                },
+                "modelInitCommand": {
+                    "type": "string",
+                    "description": "The model service initContainer command, if blank it defaults to ['/usr/bin/install', '/model/model.file', '/shared/'].",
+                    "default": "['/usr/bin/install', '/model/model.file', '/shared/']"
+                },
+                "modelPath": {
+                    "type": "string",
+                    "description": "The path of the model file inside the model service container, if blank it defaults to '/model/model.file'.",
+                    "default": "/model/model.file"
+                }
+            }
         },
-        "modelServicePort": {
-            "type": "integer",
-            "description": "The exposed port of the model server, if left blank a value will be defaulted to 8001."
-        },
-        "appPort": {
-            "type": "integer",
-            "description": "The exposed port of the chatbot application, if left blank a value will be defaulted to 8501."
-        },
-        "initContainer": {
-            "type": "string",
-            "description": "The image used for the initContainer of the chatbot app deployment, if left blank a value will be defaulted to 'quay.io/redhat-ai-dev/granite-7b-lab:latest'."
-        },
-        "appContainer": {
-            "type": "string",
-            "description": "The image used for the chatbot application interface, if left blank a value will be defaulted to 'quay.io/redhat-ai-dev/chatbot:latest'."
-        },
-        "modelInitCommand": {
-            "type": "string",
-            "description": "The command of the model server initContainer, if left blank a value will be defaulted to ['/usr/bin/install', '/model/model.file', '/shared/']."
-        },
-        "modelPath": {
-            "type": "string",
-            "description": "The path of the model file inside the model server container, if left blank a value will be defaulted to '/model/model.file'."
-        },
-        "modelServiceContainer": {
-            "type": "string",
-            "description": "The image used for the model server, if left blank a value will be defaulted to 'quay.io/ai-lab/llamacpp_python:latest'."
+        "gitops": {
+            "type": "object",
+            "properties": {
+                "gitSecretName": {
+                    "type": "string",
+                    "description": "The name of the Secret containing the required Github token. If blank it defaults to 'github-secrets'.",
+                    "default": "github-secrets"
+                },
+                "gitSecretKeyToken": {
+                    "type": "string",
+                    "description": "The name of the Secret's key with the Github token value. If blank it defaults to 'GITHUB_TOKEN'.",
+                    "default": "GITHUB_TOKEN"
+                },
+                "githubOrgName": {
+                    "type": "string",
+                    "description": "[REQUIRED] The Github Organization name that the chatbot application repository will be created into."
+                },
+                "gitSourceRepo": {
+                    "type": "string",
+                    "description": "The Github Repository with the contents of the chatbot application. If blank it defaults to 'redhat-ai-dev/ai-lab-samples'.",
+                    "default": "redhat-ai-dev/ai-lab-samples"
+                },
+                "gitDefaultBranch": {
+                    "type": "string",
+                    "description": "The default branch for the chatbot application Github repository. If blank it defaults to 'main'.",
+                    "default": "main"
+                }
+            }
         }
     }
 }

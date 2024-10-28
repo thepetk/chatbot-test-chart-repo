@@ -288,7 +288,7 @@ spec:
                   echo -n "."
               fi
 
-              SECRET_NAME="rhdh-image-registry-token"
+              SECRET_NAME="helm-chart-image-registry-token"
               if [ -n "$QUAY_DOCKERCONFIGJSON" ]; then
                 DATA=$(mktemp)
                 echo -n "$QUAY_DOCKERCONFIGJSON" >"$DATA"

@@ -1,7 +1,0 @@
-apiVersion: "pipelinesascode.tekton.dev/v1alpha1"
-kind: Repository
-metadata:
-  name: {{ .Values.application.name }}-gitops-tekton-repository
-  namespace: {{ .Values.application.namespace }}
-spec:
-  url: "https://github.com/{{ .Values.gitops.githubOrgName }}/{{ .Values.application.name }}-gitops.git"

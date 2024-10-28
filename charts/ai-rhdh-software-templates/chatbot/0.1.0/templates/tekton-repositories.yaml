@@ -1,0 +1,25 @@
+apiVersion: "pipelinesascode.tekton.dev/v1alpha1"
+kind: Repository
+metadata:
+  name: {{ .Values.application.name }}-tekton-repository
+  namespace: {{ .Values.application.namespace }}
+  labels: 
+    app.kubernetes.io/instance: {{ .Values.application.name }}
+    app.kubernetes.io/name:  {{ .Values.application.name }}
+    app.kubernetes.io/part-of: {{ .Values.application.name }}  
+spec:
+  url: "https://github.com/{{ .Values.gitops.githubOrgName }}/{{ .Values.application.name }}"
+---
+apiVersion: "pipelinesascode.tekton.dev/v1alpha1"
+kind: Repository
+metadata:
+  name: {{ .Values.application.name }}-gitops-tekton-repository
+  namespace: {{ .Values.application.namespace }}
+  labels: 
+    app.kubernetes.io/instance: {{ .Values.application.name }}
+    app.kubernetes.io/name:  {{ .Values.application.name }}
+    app.kubernetes.io/part-of: {{ .Values.application.name }}  
+spec:
+  url: "https://github.com/{{ .Values.gitops.githubOrgName }}/{{ .Values.application.name }}-gitops"
+
+
