@@ -1,6 +1,6 @@
-# AI Software Templates Helm Chart
+# AI Software Templates Helm Charts
 
-This project aims to convert the [AI Software Templates](https://github.com/redhat-ai-dev/ai-lab-template) functionality into a helm chart. Therefore, it aims to reproduce the flow of AI Software Templates without the usage of RHDH.
+This project aims to convert the [AI Software Templates](https://github.com/redhat-ai-dev/ai-lab-template) functionality into helm charts. Therefore, it aims to reproduce the flow of AI Software Templates without the usage of RHDH.
 
 ## Available Helm Charts
 
