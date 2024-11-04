@@ -2,13 +2,24 @@ apiVersion: v1
 entries:
   chatbot-ai-software-template:
   - apiVersion: v2
-    created: "2024-10-30T20:40:12.472222267-04:00"
-    description: This is an example chart for a chatbot application based on the AI
-      RHDH Software template approach. For more information please check https://github.com/redhat-ai-dev/ai-lab-template.git
-    digest: 662264428524b922bc36ce4bd508d6aac10c16788ef5047a99c829fafd1a31f9
+    created: "2024-11-04T15:35:42.262333065-05:00"
+    description: A helm chart for the AI Software Templates. For more information
+      please check https://github.com/redhat-ai-dev/ai-lab-helm-charts.git
+    digest: 73a5f247008e6b7f8b0da5c5e77d33e2a70c9c2d2a39dcd17b8600f760009d4a
     name: chatbot-ai-software-template
-    tags: chatbot,python,llama.cpp,vllm
+    tags: chatbot,llama.cpp,ai-lab-template
     urls:
     - chatbot-ai-software-template-0.1.0.tgz
     version: 0.1.0
-generated: "2024-10-30T20:40:12.471907262-04:00"
+  chatbot-ai-software-templates:
+  - apiVersion: v2
+    created: "2024-11-04T15:35:42.2625797-05:00"
+    description: A helm chart for the AI Software Templates. For more information
+      please check https://github.com/redhat-ai-dev/ai-lab-helm-charts.git
+    digest: 6cc4493bd068086c16c506387b243c9c0aaf4b92f93bb65a1a886d1b0db53c2f
+    name: chatbot-ai-software-templates
+    tags: chatbot,llama.cpp,ai-lab-templates
+    urls:
+    - chatbot-ai-software-templates-0.1.0.tgz
+    version: 0.1.0
+generated: "2024-11-04T15:35:42.261964027-05:00"

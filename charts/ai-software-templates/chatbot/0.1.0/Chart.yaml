@@ -1,5 +1,5 @@
 apiVersion: v2
 description: A helm chart for the AI Software Templates. For more information please check https://github.com/redhat-ai-dev/ai-lab-helm-charts.git
-name: ai-software-templates
-tags: chatbot,llama.cpp,ai-lab-templates
+name: chatbot-ai-software-template
+tags: chatbot,llama.cpp,ai-lab-template
 version: 0.1.0
