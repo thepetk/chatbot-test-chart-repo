@@ -30,7 +30,7 @@ spec:
     - name: image-expires-after
       value: 5d
     - name: output-image
-      value: quay.io/tpetkos/application_name_replace:{{revision}}
+      value: quay.io/quay_account_replace/application_name_replace:{{revision}}
     - name: path-context
       value: .
     - name: revision

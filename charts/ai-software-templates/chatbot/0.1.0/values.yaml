@@ -18,3 +18,4 @@ gitops:
   gitSourceRepo: "redhat-ai-dev/ai-lab-samples"
   gitDefaultBranch: "main"
   githubOrgName: ""
+  quayAccountName: ""

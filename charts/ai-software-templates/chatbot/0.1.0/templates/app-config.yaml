@@ -14,3 +14,4 @@ data:
   GITHUB_SOURCE_REPO: "{{ .Values.gitops.gitSourceRepo }}"
   GITHUB_TETKON_SOURCE_REPO: "redhat-ai-dev/ai-lab-helm-charts"
   GITHUB_DEFAULT_BRANCH: "{{ .Values.gitops.gitDefaultBranch }}"
+  QUAY_ACCOUNT_NAME: "{{ .Values.gitops.quayAccountName }}"

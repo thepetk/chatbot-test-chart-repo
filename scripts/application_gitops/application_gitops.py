@@ -19,6 +19,8 @@ SOURCE_REPO_APP_CONTENT_PATH = "chatbot"
 SOURCE_TEKTON_REPO_CONTENT_PATH = "pac/pipelineRuns"
 TEKTON_FILE_APP_NAME_REPLACEMENT = "application_name_replace"
 TEKTON_FILE_APP_NAMESPACE_REPLACEMENT = "application_namespace_replace"
+TEKTON_FILE_QUAY_ACCOUNT_REPLACEMENT = "quay_account_replace"
+QUAY_ACCOUNT_NAME = os.getenv("QUAY_ACCOUNT_NAME")
 
 
 def get_logger() -> logging.Logger:
@@ -76,9 +78,13 @@ class GithubClient:
         new_name: str = APP_NAME,
         existing_namespace: str = TEKTON_FILE_APP_NAMESPACE_REPLACEMENT,
         new_namespace: str = APP_NAMESPACE,
+        existing_quay_account_name: str = TEKTON_FILE_QUAY_ACCOUNT_REPLACEMENT,
+        new_quay_account_name: str = QUAY_ACCOUNT_NAME,
     ) -> str:
-        return content.replace(existing_name, new_name).replace(
-            existing_namespace, new_namespace
+        return (
+            content.replace(existing_name, new_name)
+            .replace(existing_namespace, new_namespace)
+            .replace(existing_quay_account_name, new_quay_account_name)
         )
 
     def _commit_new_files(
