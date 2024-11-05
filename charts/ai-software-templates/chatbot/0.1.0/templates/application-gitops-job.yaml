@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
         - name: repo-creator
-          image: quay.io/tpetkos/helm-chart-application-gitops:latest
+          image: quay.io/redhat-ai-dev/helm-chart-application-gitops:latest
           env:
             - name: GITHUB_TOKEN
               valueFrom:

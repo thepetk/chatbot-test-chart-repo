@@ -1,6 +1,6 @@
-# AI Software Templates Helm Chart
+# AI Software Templates Helm Charts
 
-This project aims to convert the [AI Software Templates](https://github.com/redhat-ai-dev/ai-lab-template) functionality into a helm chart. Therefore, it aims to reproduce the flow of AI Software Templates without the usage of RHDH.
+This project aims to convert the [AI Software Templates](https://github.com/redhat-ai-dev/ai-lab-template) functionality into helm charts. Therefore, it aims to reproduce the flow of AI Software Templates without the usage of RHDH.
 
 ## Available Helm Charts
 
@@ -8,7 +8,7 @@ At the moment one template has helm chart support and this is the [chatbot appli
 
 ## Gitops
 
-The gitops component, handled by ArgoCD for the RHDH case, is replaced by the `application_gitops` project. Therefore, post application deployment a kubernetes Job is taking care of the github application repository creation. The source code is [here](/scripts/application_gitops/)
+The gitops component, handled by ArgoCD for the RHDH case, is replaced by the `application_gitops` project. Therefore, post application deployment a kubernetes Job is taking care of the github application repository creation. The source code is [here](https://github.com/redhat-ai-dev/developer-images/tree/main/helm-charts/application-gitops)
 
 ## OpenShift Pipelines Configuration
 
