@@ -8,7 +8,7 @@ At the moment one template has helm chart support and this is the [chatbot appli
 
 ## Gitops
 
-The gitops component, handled by ArgoCD for the RHDH case, is replaced by the `application_gitops` project. Therefore, post application deployment a kubernetes Job is taking care of the github application repository creation. The source code is [here](/scripts/application_gitops/)
+The gitops component, handled by ArgoCD for the RHDH case, is replaced by the `application_gitops` project. Therefore, post application deployment a kubernetes Job is taking care of the github application repository creation. The source code is [here](https://github.com/redhat-ai-dev/developer-images/tree/main/helm-charts/application-gitops)
 
 ## OpenShift Pipelines Configuration
 
