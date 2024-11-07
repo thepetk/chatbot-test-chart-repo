@@ -71,5 +71,6 @@ Below is a table of each value used to configure this chart.
 | `gitSecretName`     | The name of the Secret containing the required Github token.                                           | `git-secrets`                      |                        |
 | `gitSecretKeyToken` | The name of the Secret's key with the Github token value.                                              | `GITHUB_TOKEN`                     |                        |
 | `githubOrgName`     | `[REQUIRED]` The Github Organization name that the chatbot application repository will be created into |                                    |                        |
-| `gitSourceRepo`     | The Github Repository with the contents of the chatbot application.                                    | `"thepetk/chatbot-test-chart-repo` |                        |
+| `gitSourceRepo`     | The Github Repository with the contents of the chatbot application.                                    | `redhat-ai-dev/ai-lab-helm-charts` |                        |
 | `gitDefaultBranch`  | The default branch for the chatbot application Github repository.                                      | `main`                             |                        |
+| `quayAccountName`   | `[REQUIRED]` The quay.io account that the application image will be pushed.                            |                                    |                        |

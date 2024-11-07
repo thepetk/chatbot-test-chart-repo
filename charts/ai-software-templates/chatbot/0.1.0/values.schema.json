@@ -83,6 +83,10 @@
                     "type": "string",
                     "description": "The default branch for the chatbot application Github repository. If blank it defaults to 'main'.",
                     "default": "main"
+                },
+                "quayAccountName": {
+                    "type": "string",
+                    "description": "[REQUIRED] The quay.io account that the application image will be pushed."
                 }
             }
         }
