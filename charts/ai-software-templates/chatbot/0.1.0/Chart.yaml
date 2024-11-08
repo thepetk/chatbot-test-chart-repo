@@ -1,4 +1,7 @@
 apiVersion: v2
+kubeVersion: ">= 1.27.0-0"
+annotations:
+  charts.openshift.io/name: Chatbot AI Software Template
 description: A helm chart for the AI Software Templates. For more information please check https://github.com/redhat-ai-dev/ai-lab-helm-charts.git
 name: chatbot-ai-software-template
 tags: chatbot,llama.cpp,ai-lab
