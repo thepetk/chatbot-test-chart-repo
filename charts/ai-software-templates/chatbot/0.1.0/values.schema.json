@@ -5,16 +5,6 @@
         "application": {
             "type": "object",
             "properties": {
-                "name": {
-                    "type": "string",
-                    "description": "The name of the application, if blank it defaults to 'chatbot-helm-chart'.",
-                    "default": "chatbot-helm-chart"
-                },
-                "namespace": {
-                    "type": ["string", "null"],
-                    "description": "The namespace that the application will be deployed, if blank it defaults to 'ai-software-templates-dev'.",
-                    "default": "ai-software-templates-dev"
-                },
                 "appPort": {
                     "type": "integer",
                     "description": "The exposed port of the application, if blank it defaults to 8501.",

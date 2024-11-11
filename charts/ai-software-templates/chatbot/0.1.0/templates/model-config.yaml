@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ .Values.application.name }}-model-config
-  namespace: {{ .Values.application.namespace }}
+  name: {{ .Release.Name }}-model-config
+  namespace: {{ .Release.Namespace }}
 data:
-  MODEL_ENDPOINT: "http://{{ .Values.application.name }}-model-server:{{ .Values.model.modelServicePort }}"
+  MODEL_ENDPOINT: "http://{{ .Release.Name }}-model-server:{{ .Values.model.modelServicePort }}"

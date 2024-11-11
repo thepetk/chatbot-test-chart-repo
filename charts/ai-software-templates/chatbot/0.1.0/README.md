@@ -38,34 +38,34 @@ helm upgrade --install <release-name> --namespace <release-namespace> .
 
 ## Values
 
-Below is a table of each value used to configure this chart.
+Below is a table of each value used to configure this chart. Note:
+
+- Your helm release's name will be used to as the name of the application github repository.
 
 ### Application
 
-| Value          | Description                                                   | Default                                | Additional Information |
-| -------------- | ------------------------------------------------------------- | -------------------------------------- | ---------------------- |
-| `name`         | The name of the application.                                  | `chatbot-helm-chart`                   |                        |
-| `namespace`    | The namespace that the application will be deployed.          | `ai-software-templates-dev`            |                        |
-| `appPort`      | The exposed port of the application                           | 8501                                   |                        |
-| `appContainer` | The initial image used for the chatbot application interface. | `quay.io/redhat-ai-dev/chatbot:latest` |                        |
+| Value                      | Description                                                   | Default                                | Additional Information |
+| -------------------------- | ------------------------------------------------------------- | -------------------------------------- | ---------------------- |
+| `application.appPort`      | The exposed port of the application                           | 8501                                   |                        |
+| `application.appContainer` | The initial image used for the chatbot application interface. | `quay.io/redhat-ai-dev/chatbot:latest` |                        |
 
 ### Model
 
-| Value                   | Description                                                           | Default                                                 | Additional Information |
-| ----------------------- | --------------------------------------------------------------------- | ------------------------------------------------------- | ---------------------- |
-| `modelServicePort`      | The exposed port of the model service.                                | 8001                                                    |                        |
-| `modelServiceContainer` | The image used for the model service.                                 | `quay.io/ai-lab/llamacpp_python:latest`                 |                        |
-| `initContainer`         | The image used for the initContainer of the model service deployment. | `quay.io/redhat-ai-dev/granite-7b-lab:latest`           |                        |
-| `modelInitCommand`      | The model service initContainer command.                              | `['/usr/bin/install', '/model/model.file', '/shared/']` |                        |
-| `modelPath`             | The path of the model file inside the model service container.        | `/model/model.file`                                     |                        |
+| Value                         | Description                                                           | Default                                                 | Additional Information |
+| ----------------------------- | --------------------------------------------------------------------- | ------------------------------------------------------- | ---------------------- |
+| `model.modelServicePort`      | The exposed port of the model service.                                | 8001                                                    |                        |
+| `model.modelServiceContainer` | The image used for the model service.                                 | `quay.io/ai-lab/llamacpp_python:latest`                 |                        |
+| `initContainer`               | The image used for the initContainer of the model service deployment. | `quay.io/redhat-ai-dev/granite-7b-lab:latest`           |                        |
+| `model.modelInitCommand`      | The model service initContainer command.                              | `['/usr/bin/install', '/model/model.file', '/shared/']` |                        |
+| `model.modelPath`             | The path of the model file inside the model service container.        | `/model/model.file`                                     |                        |
 
 ### Gitops
 
-| Value               | Description                                                                                            | Default                            | Additional Information |
-| ------------------- | ------------------------------------------------------------------------------------------------------ | ---------------------------------- | ---------------------- |
-| `gitSecretName`     | The name of the Secret containing the required Github token.                                           | `git-secrets`                      |                        |
-| `gitSecretKeyToken` | The name of the Secret's key with the Github token value.                                              | `GITHUB_TOKEN`                     |                        |
-| `githubOrgName`     | `[REQUIRED]` The Github Organization name that the chatbot application repository will be created into |                                    |                        |
-| `gitSourceRepo`     | The Github Repository with the contents of the chatbot application.                                    | `redhat-ai-dev/ai-lab-helm-charts` |                        |
-| `gitDefaultBranch`  | The default branch for the chatbot application Github repository.                                      | `main`                             |                        |
-| `quayAccountName`   | `[REQUIRED]` The quay.io account that the application image will be pushed.                            |                                    |                        |
+| Value                      | Description                                                                                            | Default                            | Additional Information |
+| -------------------------- | ------------------------------------------------------------------------------------------------------ | ---------------------------------- | ---------------------- |
+| `gitops.gitSecretName`     | The name of the Secret containing the required Github token.                                           | `git-secrets`                      |                        |
+| `gitops.gitSecretKeyToken` | The name of the Secret's key with the Github token value.                                              | `GITHUB_TOKEN`                     |                        |
+| `gitops.githubOrgName`     | `[REQUIRED]` The Github Organization name that the chatbot application repository will be created into |                                    |                        |
+| `gitops.gitSourceRepo`     | The Github Repository with the contents of the chatbot application.                                    | `"thepetk/chatbot-test-chart-repo` |                        |
+| `gitops.gitDefaultBranch`  | The default branch for the chatbot application Github repository.                                      | `main`                             |                        |
+| `gitops.quayAccountName`   | `[REQUIRED]` The quay.io account that the application image will be pushed.                            |                                    |                        |
