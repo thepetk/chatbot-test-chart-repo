@@ -8,8 +8,9 @@ The deployment flow, will create an application instance, a model server and a g
 
 - You have a Github APP created with sufficient permissions for the organization that the application repository will be created. Detailed instructions for the github application creation can be found [here](https://github.com/redhat-ai-dev/ai-rhdh-installer/blob/main/docs/APP-SETUP.md#github-app).
 - You need to have access to a cluster for each operation with OpenShift 4, like deploying and testing.
-- Your cluster should have [Openshift Pipelines Operator](https://www.redhat.com/en/technologies/cloud-computing/openshift/pipelines) installed and should be connected to your Github APP's webhook. In case your cluster is not configured yet, check the ["Setup Openshift Pipelines Operator"](#setup-openshift-pipelines-operator) below for further instructions.
-- A Secret is already created in the Namespace that you are planning to install your helm release, containing a [Github Token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic) with sufficient access to the given Github Organization. You can find the exact permissions [here](https://github.com/redhat-ai-dev/ai-rhdh-installer/blob/main/docs/APP-SETUP.md#procedure).
+- The Namespace that your application will run is already created in your cluster.
+- Your cluster should have [Openshift Pipelines Operator](https://www.redhat.com/en/technologies/cloud-computing/openshift/pipelines) installed and should be connected to your Github APP's webhook. In case your cluster is not configured yet, check the ["Pipelines Configuration Guide"](../../../../docs/PIPELINES_CONFIGURATION.md) for further instructions.
+- A `key/value` Secret is already created in the Namespace that you are planning to install your helm release, containing a [Github Token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic) with sufficient access to the given Github Organization. You can find the exact permissions [here](https://github.com/redhat-ai-dev/ai-rhdh-installer/blob/main/docs/APP-SETUP.md#procedure). Your Secret's name and the Key of the github token will be provided as values to the helm chart.
 
 ## Background
 
@@ -26,12 +27,6 @@ Apart from the two main deployments, the gitops & OpenShift Pipelines parts are 
 ## Installation
 
 The helm chart can be directly installed from the OpenShift Dev Console. Check [here](https://docs.redhat.com/en/documentation/openshift_container_platform/4.8/html/building_applications/working-with-helm-charts#understanding-helm) for more information.
-
-### Setup Openshift Pipelines Operator
-
-The suggested way to subscribe to, configure and connect the Openshift Pipelines and your Github App, is the through [openshift-pipelines](../../../openshift-pipelines/) helm chart.
-
-<!-- TODO: Add manual instructions if needed -->
 
 ### Install using Helm
 
