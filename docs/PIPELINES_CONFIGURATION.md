@@ -70,6 +70,7 @@ kubectl -n "$APP_NAMESPACE" create secret generic "$PIPELINES_SECRET_NAME" \
 9. Create the `pipelines-as-code-secret`, containing your Github App's `App ID`, `Private Key`, `Webhook Secret`.
 
 ```
+export GITHUB_APP_APP_ID=<your-github-app's-app-id-value>
 kubectl -n "$PIPELINES_NAMESPACE" create secret generic pipelines-as-code-secret \
     --from-literal github-application-id="$GITHUB_APP_APP_ID" \
     --from-literal github-private-key="$GITHUB_APP_PRIVATE_KEY" \
