@@ -51,8 +51,6 @@ spec:
     artifacts.pipelinerun.storage: oci
     artifacts.taskrun.format: in-toto
     artifacts.taskrun.storage: oci
-    transparency.enabled: "true"
-    transparency.url: http://rekor-server.\$NAMESPACE.svc
 EOF
 )"
 ```
