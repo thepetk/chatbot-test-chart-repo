@@ -7,7 +7,7 @@ The OpenShift Pipelines configuration is a requirement in order to support CI/CD
 2. Ensure that the `pipeline-as-code-controller` is up by getting its route:
 
 ```
-kubectl get route -n <the-operator's-namespace> pipelines-as-code-controller
+kubectl get route -n openshift-pipelines pipelines-as-code-controller
 ```
 
 3. Download `cosign`, which will be used to generate the updated `signing-secrets`.
@@ -23,8 +23,8 @@ curl -sL https://github.com/sigstore/cosign/releases/latest/download/cosign-linu
 ```
 export KUBERNETES_SERVICE_PORT=<your-kubernetes-service port>
 export KUBERNETES_SERVICE_HOST=<your-kubernetes-service host>"
-cosign generate-key-pair k8s://<your-operator's namespace>/signing-secrets
-kubectl patch secret -n <your-operator's namespace> signing-secrets -o yaml --patch='{"immutable": true}'
+cosign generate-key-pair k8s://openshift-pipelines/signing-secrets
+kubectl patch secret -n openshift-pipelines signing-secrets -o yaml --patch='{"immutable": true}'
 ```
 
 6. Ensure that the `tektonconfigs` CRDs are available. You can verify that if the below command returns 1 as response:
