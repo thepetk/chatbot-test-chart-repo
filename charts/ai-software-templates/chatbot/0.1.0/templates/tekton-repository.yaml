@@ -1,13 +1,13 @@
 apiVersion: "pipelinesascode.tekton.dev/v1alpha1"
 kind: Repository
 metadata:
-  name: {{ .Values.application.name }}-tekton-repository
-  namespace: {{ .Values.application.namespace }}
+  name: {{ .Release.Name }}-tekton-repository
+  namespace: {{ .Release.Namespace }}
   labels: 
-    app.kubernetes.io/instance: {{ .Values.application.name }}
-    app.kubernetes.io/name:  {{ .Values.application.name }}
-    app.kubernetes.io/part-of: {{ .Values.application.name }}  
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/name:  {{ .Release.Name }}
+    app.kubernetes.io/part-of: {{ .Release.Name }}  
 spec:
-  url: "https://github.com/{{ .Values.gitops.githubOrgName }}/{{ .Values.application.name }}"
+  url: "https://github.com/{{ .Values.gitops.githubOrgName }}/{{ .Release.Name }}"
 
 

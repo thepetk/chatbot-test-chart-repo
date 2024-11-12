@@ -2,10 +2,10 @@ apiVersion: route.openshift.io/v1
 kind: Route
 metadata: 
   labels: 
-    app.kubernetes.io/instance: {{ .Values.application.name }}
-    app.kubernetes.io/name: {{ .Values.application.name }} 
-  name: {{ .Values.application.name }}
-  namespace: {{ .Values.application.namespace }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/name: {{ .Release.Name }} 
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
 spec:
   port:
     targetPort: {{ .Values.application.appPort }}
@@ -14,6 +14,6 @@ spec:
     termination: edge
   to:
     kind: Service
-    name: {{ .Values.application.name }} 
-    weight: 100 
+    name: {{ .Release.Name }} 
+    weight: 100
   wildcardPolicy: None

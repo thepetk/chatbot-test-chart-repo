@@ -1,5 +1,0 @@
-apiVersion: v2
-description: This chart is part of the chatbot ai software template chart and configures the openshift pipelines.
-name: chatbot-ai-software-template-pipelines-configuration
-tags: chatbot,python,llama.cpp,vllm
-version: 0.1.0

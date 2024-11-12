@@ -2,14 +2,14 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   labels: 
-    app.kubernetes.io/instance: {{ .Values.application.name }}-app-config
-    app.kubernetes.io/name:  {{ .Values.application.name }}-app-config
-    app.kubernetes.io/part-of: {{ .Values.application.name }}
-  name: {{ .Values.application.name }}-app-config
-  namespace: {{ .Values.application.namespace }}  
+    app.kubernetes.io/instance: {{ .Release.Name }}-app-config
+    app.kubernetes.io/name:  {{ .Release.Name }}-app-config
+    app.kubernetes.io/part-of: {{ .Release.Name }}
+  name: {{ .Release.Name }}-app-config
+  namespace: {{ .Release.Namespace }}  
 data:
-  APP_NAME: "{{ .Values.application.name }}"
-  APP_NAMESPACE: "{{ .Values.application.namespace }}"
+  APP_NAME: "{{ .Release.Name }}"
+  APP_NAMESPACE: "{{ .Release.Namespace }}"
   GITHUB_ORG_NAME: "{{ .Values.gitops.githubOrgName }}"  
   GITHUB_SOURCE_REPO: "{{ .Values.gitops.gitSourceRepo }}"
   GITHUB_TETKON_SOURCE_REPO: "redhat-ai-dev/ai-lab-helm-charts"

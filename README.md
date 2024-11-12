@@ -10,11 +10,11 @@ At the moment one template has helm chart support and this is the [chatbot appli
 
 The gitops component, handled by ArgoCD for the RHDH case, is replaced by the `application_gitops` project. Therefore, post application deployment a kubernetes Job is taking care of the github application repository creation. The source code is [here](https://github.com/redhat-ai-dev/developer-images/tree/main/helm-charts/application-gitops)
 
-## OpenShift Pipelines Configuration
+## OpenShift Pipelines
 
-For OpenShift Pipelines configuration there's a separate (optional) helm chart, that a user can use to install and configure the pipelines for their project. The configuration helm chart is [here](/charts/openshift-pipelines/).
+For OpenShift Pipelines configuration there's an [OpenShift Pipelines Configuration Guide](/docs/PIPELINES_CONFIGURATION.md) that the user can follow to configure their pipelines, prior to installing the helm chart.
 
-The helm chart mainly uses the pipelines under [rhdh-pipelines](https://github.com/redhat-ai-dev/rhdh-pipelines) repo. The only customized resources used for the helm chart case are:
+The helm chart mainly uses the tekton pipelines under [rhdh-pipelines](https://github.com/redhat-ai-dev/rhdh-pipelines) repo. The only customized resources used for the helm chart case are:
 
 - The [.tekton/docker-push.yaml](/pac/pipelineRuns/.tekton/docker-push.yaml) PipelineRun used to manage `push` events received from the github app webhook.
 - The [update-deployment.yaml](/pac/tasks/update-deployment.yaml) Task which is used to update the application deployment whenever a new image is pushed to the image registry.

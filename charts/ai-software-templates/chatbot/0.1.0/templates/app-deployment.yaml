@@ -7,27 +7,27 @@ metadata:
     tad.gitops.set/replicas: ".spec.replicas"
     tad.gitops.get/replicas: ".spec.replicas" 
   labels: 
-    app.kubernetes.io/instance: {{ .Values.application.name }}
-    app.kubernetes.io/name:  {{ .Values.application.name }}
-    app.kubernetes.io/part-of: {{ .Values.application.name }}  
-  name: {{ .Values.application.name }}
-  namespace: {{ .Values.application.namespace }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/name:  {{ .Release.Name }}
+    app.kubernetes.io/part-of: {{ .Release.Name }}  
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/instance:  {{ .Values.application.name }} 
+      app.kubernetes.io/instance:  {{ .Release.Name }} 
   template:
     metadata: 
       labels:
-        app.kubernetes.io/instance:  {{ .Values.application.name }}
+        app.kubernetes.io/instance:  {{ .Release.Name }}
     spec:
       containers:
       - image:  {{ .Values.application.appContainer }}
         name: app-inference
         envFrom:
         - configMapRef:
-            name: {{ .Values.application.name }}-model-config
+            name: {{ .Release.Name }}-model-config
         ports:
         - containerPort: {{ .Values.application.appPort }}
         securityContext:
