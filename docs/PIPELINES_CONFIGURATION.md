@@ -110,8 +110,7 @@ kubectl -n $APP_NAMESPACE create secret generic pipelines-secret --from-literal=
 
 ```
 export IMAGE_REGISTRY_TOKEN_SECRET="ai-lab-image-registry-token"
-kubectl -n $APP_NAMESPACE create secret docker-registry "$IMAGE_REGISTRY_TOKEN_SECRET" --from-file=.dock
-erconfigjson=<your-docker-config.json-file-path>
+kubectl -n $APP_NAMESPACE create secret docker-registry "$IMAGE_REGISTRY_TOKEN_SECRET" --from-file=.dockerconfigjson=<your-docker-config.json-file-path>
 ```
 
 13. Patch the `default` and `pipeline` ServiceAccounts by adding to them the image registry token secret created above:
