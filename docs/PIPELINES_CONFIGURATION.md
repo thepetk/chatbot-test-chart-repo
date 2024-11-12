@@ -59,7 +59,7 @@ EOF
 
 ```
 export APP_NAMESPACE=<your-app's namespace>
-export PIPELINES_SECRET_NAME=<your pipelines-secret name>
+export PIPELINES_SECRET_NAME="ai-lab-pipelines-secret"
 export GITHUB_APP_WEBHOOK_SECRET=<your github app's webhook secret>
 export GITHUB_APP_WEBHOOK_URL=<your github app's webhook url>
 kubectl -n "$APP_NAMESPACE" create secret generic "$PIPELINES_SECRET_NAME" \
@@ -105,7 +105,7 @@ kubectl -n $APP_NAMESPACE create secret generic pipelines-secret --from-literal=
 12. Similarly with the previous step, create the `image-registry-token` in your application's Namespace, containing the docker `config.json` file of your Quay.io account (see more info [here](https://docs.redhat.com/en/documentation/red_hat_quay/3.6/html-single/use_red_hat_quay/index#allow-robot-access-user-repo)):
 
 ```
-export IMAGE_REGISTRY_TOKEN_SECRET=<your-secret's-name>
+export IMAGE_REGISTRY_TOKEN_SECRET="ai-lab-image-registry-token"
 kubectl -n $APP_NAMESPACE create secret docker-registry "$IMAGE_REGISTRY_TOKEN_SECRET" --from-file=.dock
 erconfigjson=<your-docker-config.json-file-path>
 ```
