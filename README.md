@@ -29,4 +29,5 @@ In case you're interested to test your updates by importing the `ai-lab-helm-cha
 The ai-lab-helm-charts are created on demand.
 
 - A `tag` should be created with the version of the release as name. ai-lab-helmcharts follows the v{major}.{minor}.{bugfix} format (e.g v0.1.0).
+- Before proceeding, make sure that all the `Chart.yaml` `version` fields have this tag as value. For example in case the tag is `v0.1.0` the `version` should be `0.1.0`.
 - After the new release is published, the updated helm packages will be pinned on the release.
