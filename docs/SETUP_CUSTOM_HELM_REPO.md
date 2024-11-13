@@ -1,6 +1,6 @@
 ## Testing with a Custom Helm Repository
 
-In case you would like to setup a custom helm repository on your fork and be able to import and test the ai-lab-helm charts repo on your OCP cluster, you can follow the steps below:
+To setup a custom Helm repository on your fork and be able to import and test the `ai-lab-helm-charts` repo on your OCP cluster, you can follow the steps below:
 
 ### Setup gh-pages
 
@@ -12,7 +12,7 @@ In case you would like to setup a custom helm repository on your fork and be abl
 
 ### Add Helm Package and Index
 
-- Package the helm chart you want to test:
+- Package the Helm chart you want to test:
 
 ```
 # from project root dir
@@ -31,7 +31,7 @@ helm repo index .
 
 - Push to your branch. A deployment will start after the push event.
 
-- On your OCP cluster you can create a custom helm repo by applying this yaml file:
+- On your OCP cluster you can create a custom Helm repo by applying this yaml file:
 
 ```
 apiVersion: helm.openshift.io/v1beta1
