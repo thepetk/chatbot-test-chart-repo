@@ -36,6 +36,13 @@ To install the Chatbot AI Sample Helm chart using Helm directly, you can run:
 helm upgrade --install <release-name> --namespace <release-namespace> .
 ```
 
+The `.gitignore` file in this repository filters files named `private-values.yaml`.  Thus, you can maintain in 
+your local fork of this repository a value settings file outside of git management.  Copy `values.yaml` in this directory to `private-values.yaml` and make any necessary edits to `private-values.yaml`.  Then change your helm invocation to the following:
+
+```shell
+helm upgrade --install <release-name> --namespace <release-namespace> -f ./private-values.yaml .
+```
+
 ## Values
 
 Below is a table of each value used to configure this chart. Note:
