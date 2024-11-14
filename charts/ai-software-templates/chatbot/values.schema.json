@@ -66,7 +66,7 @@
                 },
                 "gitSourceRepo": {
                     "type": "string",
-                    "description": "The Github Repository with the contents of the chatbot application. If blank it defaults to 'redhat-ai-dev/ai-lab-samples'.",
+                    "description": "The Github Repository with the contents of the ai-lab sample chatbot application. It must be either the `redhat-ai-dev/ai-lab-samples` or its fork. If blank it defaults to 'redhat-ai-dev/ai-lab-samples'.",
                     "default": "redhat-ai-dev/ai-lab-samples"
                 },
                 "gitDefaultBranch": {
