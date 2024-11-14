@@ -1,4 +1,4 @@
-# AI Software Template Helm Chart
+# Chatbot AI Sample Helm Chart
 
 This repo is a Helm chart for building and deploying a Large language model (LLM)-enabled [chat application](https://github.com/redhat-ai-dev/ai-lab-samples/tree/main/chatbot). For more information about helm charts see the official [Helm Charts Documentation](https://helm.sh/).
 
@@ -30,7 +30,7 @@ The helm chart can be directly installed from the OpenShift Dev Console. Check [
 
 ### Install using Helm
 
-In order to install AI Software Template Helm chart using helm directly, you can run:
+In order to install Chatbot AI Sample Helm chart using helm directly, you can run:
 
 ```
 export APP_NAMESPACE='the-namespace-your-release-will-be-installed'
