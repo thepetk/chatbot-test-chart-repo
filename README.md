@@ -19,3 +19,15 @@ The helm chart mainly uses the tekton pipelines under [rhdh-pipelines](https://g
 - The [.tekton/docker-push.yaml](/pac/pipelineRuns/.tekton/docker-push.yaml) PipelineRun used to manage `push` events received from the github app webhook.
 - The [update-deployment.yaml](/pac/tasks/update-deployment.yaml) Task which is used to update the application deployment whenever a new image is pushed to the image registry.
 - The [docker-build-ai-software-templates-chart.yaml](./pac/pipelines/docker-build-ai-software-templates-chart.yaml) Pipeline, again used for the application deployment update.
+
+## Testing with a Custom Helm Repository
+
+To test your updates by importing the `ai-lab-helm-charts` fork as a custom Helm chart repository, you can follow the instructions [here](./docs/SETUP_CUSTOM_HELM_REPO.md)
+
+## Release Process
+
+The ai-lab-helm-charts are created on demand.
+
+- A `tag` should be created with the version of the release as the name. `ai-lab-helmcharts` follows the v{major}.{minor}.{bugfix} format (e.g v0.1.0).
+- Before proceeding, make sure that all the `version` fields within `Chart.yaml` have this tag as the value. For example in the case where the tag is `v0.1.0`, the `version` should be `0.1.0`.
+- After the new release is published, the updated Helm packages will be pinned on the release.
