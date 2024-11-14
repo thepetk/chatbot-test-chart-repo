@@ -4,7 +4,7 @@ The OpenShift Pipelines configuration is a requirement in order to support CI/CD
 
 1. Install the [Openshift Pipelines Operator](https://docs.redhat.com/en/documentation/openshift_container_platform/4.6/html/pipelines/installing-pipelines#installing-pipelines).
 
-2. Ensure that the `pipeline-as-code-controller` is up by getting its route. Remember to add this route as the webhook url of your Github app:
+2. Ensure that the `pipeline-as-code-controller` is up by getting its route. Remember to add this route as the webhook url of your Github App:
 
 ```
 kubectl get route -n openshift-pipelines pipelines-as-code-controller
