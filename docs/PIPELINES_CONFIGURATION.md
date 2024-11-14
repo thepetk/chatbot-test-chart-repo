@@ -10,15 +10,21 @@ The OpenShift Pipelines configuration is a requirement in order to support CI/CD
 kubectl get route -n openshift-pipelines pipelines-as-code-controller
 ```
 
-3. Download `cosign`, which will be used to generate the updated `signing-secrets`.
+3. Download `cosign` depending on your platform, which will be used to generate the updated `signing-secrets`.
 
 ```
 curl -sL https://github.com/sigstore/cosign/releases/latest/download/cosign-linux-amd64 -o /usr/bin/cosign && chmod +x /usr/bin/cosign
 ```
 
-4. In your Operator's Namespace, delete (if exists) the `signing-secrets` Secret.
+or
 
-5. Generate the new `signing-secrets` inside the Operator's Namespace and patch the new secret as immutable:
+```
+curl -sL https://github.com/sigstore/cosign/releases/latest/download/cosign-darwin-amd64 -o /usr/bin/cosign && chmod +x /usr/bin/cosign
+```
+
+4. In the `openshift-pipelines` Namespace, delete (if exists) the `signing-secrets` Secret.
+
+5. Generate the new `signing-secrets` in the `openshift-pipelines` Namespace and patch the new secret as immutable:
 
 ```
 export KUBERNETES_SERVICE_PORT=<your-kubernetes-service port>
@@ -30,10 +36,10 @@ kubectl patch secret -n openshift-pipelines signing-secrets -o yaml --patch='{"i
 6. Ensure that the `tektonconfigs` CRDs are available. You can verify that if the below command returns 1 as response:
 
 ```
-kubectl api-resources | grep -c "^tektonconfigs "
+kubectl api-resources | grep "tektonconfigs"
 ```
 
-7. Update the `TektonConfig`, by enabling the necessary resolvers and use a targeted namespace:
+7. Update the `TektonConfig`, by enabling the necessary resolvers:
 
 ```
 kubectl patch tektonconfig config --type 'merge' --patch "$( cat <<EOF
@@ -74,7 +80,7 @@ export GITHUB_APP_APP_ID=<your-github-app's-app-id-value>
 export GITHUB_APP_PRIVATE_KEY="
 <your-multi-lined-github-app-private-key>
 "
-kubectl -n "$PIPELINES_NAMESPACE" create secret generic pipelines-as-code-secret \
+kubectl -n openshift-pipelines create secret generic pipelines-as-code-secret \
     --from-literal github-application-id="$GITHUB_APP_APP_ID" \
     --from-literal github-private-key="$GITHUB_APP_PRIVATE_KEY" \
     --from-literal webhook.secret="$GITHUB_APP_WEBHOOK_SECRET"
@@ -83,7 +89,7 @@ kubectl -n "$PIPELINES_NAMESPACE" create secret generic pipelines-as-code-secret
 10. Fetch the codesign public key from the `signing-secrets` Secret inside the Operator's Namespace.
 
 ```
-export COSIGN_SIGNING_PUBLIC_KEY=$(kubectl get secrets -n $PIPELINES_NAMESPACE signing-secrets -o jsonpath='{.data.cosign\.pub}')
+export COSIGN_SIGNING_PUBLIC_KEY=$(kubectl get secrets -n openshift-pipelines signing-secrets -o jsonpath='{.data.cosign\.pub}')
 cat <<EOF | kubectl apply -f - >/dev/null
 apiVersion: v1
 data:
@@ -106,14 +112,14 @@ EOF
 kubectl -n $APP_NAMESPACE create secret generic pipelines-secret --from-literal=webhook.secret=$GITHUB_APP_WEBHOOK_SECRET
 ```
 
-12. Similarly with the previous step, create the `image-registry-token` in your application's Namespace, containing the docker `config.json` file of your Quay.io account (see more info [here](https://docs.redhat.com/en/documentation/red_hat_quay/3.6/html-single/use_red_hat_quay/index#allow-robot-access-user-repo)):
+12. Similarly with the previous step, create the `ai-lab-image-registry-token` in your application's Namespace, containing the docker `config.json` file of your Quay.io account (see more info [here](https://docs.redhat.com/en/documentation/red_hat_quay/3.6/html-single/use_red_hat_quay/index#allow-robot-access-user-repo)):
 
 ```
 export IMAGE_REGISTRY_TOKEN_SECRET="ai-lab-image-registry-token"
 kubectl -n $APP_NAMESPACE create secret docker-registry "$IMAGE_REGISTRY_TOKEN_SECRET" --from-file=.dockerconfigjson=<your-docker-config.json-file-path>
 ```
 
-13. Patch the `default` and `pipeline` ServiceAccounts by adding to them the image registry token secret created above:
+1.  Patch the `default` and `pipeline` ServiceAccounts in your application Namespace by adding the image registry token secret created above:
 
 ```
 for SA in default pipeline; do
