@@ -5,4 +5,4 @@ annotations:
 description: A helm chart for the Chatbot AI Sample app. For more information please check https://github.com/redhat-ai-dev/ai-lab-helm-charts.git
 name: chatbot-ai-sample
 tags: chatbot,llama.cpp,ai-lab
-version: 0.1.0
+version: 0.1.1
