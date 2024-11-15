@@ -1,5 +1,5 @@
 
-Thank you for installing the AI Software Template Chat Application!
+Thank you for installing the Chatbot AI Sample Application!
 
 Now that you have deployed the chatbot application, you can find more details here:
 
