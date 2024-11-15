@@ -33,10 +33,7 @@ The helm chart can be directly installed from the OpenShift Dev Console. Check [
 In order to install Chatbot AI Sample Helm chart using helm directly, you can run:
 
 ```
-export APP_NAMESPACE='the-namespace-your-release-will-be-installed'
-export RELEASE_NAME='the-name-of-your-release'
-
-helm upgrade --install $RELEASE_NAME --namespace $APP_NAMESPACE .
+helm upgrade --install <release-name> --namespace <release-namespace> .
 ```
 
 ## Values
