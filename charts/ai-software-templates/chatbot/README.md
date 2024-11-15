@@ -30,7 +30,7 @@ The helm chart can be directly installed from the OpenShift Dev Console. Check [
 
 ### Install using Helm
 
-In order to install Chatbot AI Sample Helm chart using helm directly, you can run:
+To install the Chatbot AI Sample Helm chart using Helm directly, you can run:
 
 ```
 helm upgrade --install <release-name> --namespace <release-namespace> .
