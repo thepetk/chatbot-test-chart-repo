@@ -69,10 +69,10 @@ Below is a table of each value used to configure this chart. Note:
 ### Gitops
 
 | Value                      | Description                                                                                                                                         | Default                        | Additional Information |
-| -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ | ---------------------- |
+| -------------------------- |-----------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------| ---------------------- |
 | `gitops.gitSecretName`     | The name of the Secret containing the required Github token.                                                                                        | `git-secrets`                  |                        |
 | `gitops.gitSecretKeyToken` | The name of the Secret's key with the Github token value.                                                                                           | `GITHUB_TOKEN`                 |                        |
-| `gitops.githubOrgName`     | `[REQUIRED]` The Github Organization name that the chatbot application repository will be created into                                              |                                |                        |
+| `gitops.githubOrgName`     | `[REQUIRED]` The Github Organization name that the chatbot application repository will be created into.                                             |                                |                        |
 | `gitops.gitSourceRepo`     | The Github Repository with the contents of the ai-lab sample chatbot application. It must be either the `redhat-ai-dev/ai-lab-samples` or its fork. | `redhat-ai-dev/ai-lab-samples` |
 | `gitops.gitDefaultBranch`  | The default branch for the chatbot application Github repository.                                                                                   | `main`                         |                        |
 | `gitops.quayAccountName`   | `[REQUIRED]` The quay.io account that the application image will be pushed.                                                                         |                                |                        |
