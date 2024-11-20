@@ -17,11 +17,12 @@ spec:
             - -c
             - |
               #!/usr/bin/env bash
+              set -o nounset
+              set -o pipefail
               cd /tmp || exit
-              wget https://github.com/cli/cli/releases/download/v2.62.0/gh_2.62.0_linux_amd64.tar.gz
-              gunzip gh_2.62.0_linux_amd64.tar.gz
-              tar xf gh_2.62.0_linux_amd64.tar
-              export PATH=./gh_2.62.0_linux_amd64/bin:$PATH
+              wget https://github.com/cli/cli/releases/download/v2.62.0/gh_2.62.0_linux_amd64.tar.gz || exit
+              tar xzf gh_2.62.0_linux_amd64.tar.gz
+              export PATH=$(pwd)/gh_2.62.0_linux_amd64/bin:$PATH
               export SOURCE_REPO_APP_CONTENT_PATH="chatbot"
               export SOURCE_TEKTON_REPO_CONTENT_PATH="pac/pipelineRuns"
               export TEKTON_FILE_APP_NAME_REPLACEMENT="application_name_replace"
@@ -43,7 +44,7 @@ spec:
               gh auth login -p https
               gh auth setup-git --hostname=github.com
 
-              gh repo view "$GH_REPO" 2> /dev/null
+              gh repo view "$GH_REPO" --json id 2> /dev/null
 
               return_code=$?
 
@@ -51,7 +52,13 @@ spec:
                 echo Repo "$GH_REPO" already exists
                 exit 0
               else
-                gh repo create "$GH_REPO" --public --gitignore Python --license Apache-2.0
+                gh repo create "$GH_REPO" --public --gitignore Python --license Apache-2.0 || exit
+                gh repo view "$GH_REPO" --json id 2> /dev/null
+                return_code=$?
+                if [ $return_code != 0 ]; then
+                  echo Repo create of "$GH_REPO" could not be confirmed
+                  exit $return_code
+                fi
               fi
 
               gh repo clone "$GITHUB_SOURCE_REPO" app-source -- --no-tags --branch="$GITHUB_DEFAULT_BRANCH" --single-branch
