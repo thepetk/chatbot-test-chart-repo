@@ -37,11 +37,7 @@ spec:
                  tar cf - ./* | (cd ../../"$APP_NAME" || exit; tar xf -)
                  cd ../../tekton-source/pac/pipelineRuns/.tekton || exit
                  tar cf - ./* | (cd ../../../../"$APP_NAME"/.tekton || exit; tar xf -)
-                 cd ../../pipelines || exit
-                 tar cf - ./* | (cd ../../../"$APP_NAME"/.tekton || exit; tar xf -)
-                 cd ../tasks || exit
-                 tar cf - ./* | (cd ../../../"$APP_NAME"/.tekton || exit; tar xf -)
-                 cd ../../../"$APP_NAME" || exit
+                 cd ../../../../"$APP_NAME" || exit
               }
 
               cd /tmp || exit
@@ -97,19 +93,7 @@ spec:
                   echo "$same"
                   exit 1
                 fi
-                same=$(diff existing/.tekton/docker-build-ai-software-templates-chart.yaml "$APP_NAME"/.tekton/docker-build-ai-software-templates-chart.yaml)
-                return_code=$?
-                if [ $return_code != 0 ]; then
-                  echo "$same"
-                  exit 1
-                fi
                 same=$(diff existing/.tekton/docker-push.yaml "$APP_NAME"/.tekton/docker-push.yaml)
-                return_code=$?
-                if [ $return_code != 0 ]; then
-                  echo "$same"
-                  exit 1
-                fi
-                same=$(diff existing/.tekton/update-deployment.yaml "$APP_NAME"/.tekton/update-deployment.yaml)
                 return_code=$?
                 if [ $return_code != 0 ]; then
                   echo "$same"
