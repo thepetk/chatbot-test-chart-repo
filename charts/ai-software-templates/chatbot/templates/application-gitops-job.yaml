@@ -20,9 +20,10 @@ spec:
               set -o nounset
               set -o pipefail
               cd /tmp || exit
-              wget https://github.com/cli/cli/releases/download/v2.62.0/gh_2.62.0_linux_amd64.tar.gz || exit
-              tar xzf gh_2.62.0_linux_amd64.tar.gz
-              export PATH=$(pwd)/gh_2.62.0_linux_amd64/bin:$PATH
+              wget https://github.com/cli/cli/releases/download/v"$GH_VERSION"/gh_"$GH_VERSION"_linux_amd64.tar.gz || exit
+              tar xzf gh_"$GH_VERSION"_linux_amd64.tar.gz
+              GH_PATH=$(pwd)/gh_"$GH_VERSION"_linux_amd64/bin
+              export PATH="$GH_PATH":"$PATH"
               export SOURCE_REPO_APP_CONTENT_PATH="chatbot"
               export SOURCE_TEKTON_REPO_CONTENT_PATH="pac/pipelineRuns"
               export TEKTON_FILE_APP_NAME_REPLACEMENT="application_name_replace"
