@@ -8,7 +8,14 @@ At the moment one template has helm chart support and this is the [chatbot appli
 
 ## Gitops
 
-The gitops component, handled by ArgoCD for the RHDH case, is replaced by the `application_gitops` project. Therefore, post application deployment a kubernetes Job is taking care of the github application repository creation. The source code is [here](https://github.com/redhat-ai-dev/developer-images/tree/main/helm-charts/application-gitops)
+The gitops component, handled by ArgoCD for the RHDH case, is replaced by a Kubernetes Job created by the Helm chart, where this Job:
+- Creates the GitHub repository for the application.
+- Copies the application source code into the new repository.
+- Copies the Tekton Pipelines As Code PipelineRun/Pipeline/Task that build new images for the application as pull requests 
+are merged and updates the Deployment of the application with the new version of the image.
+- Commits these changes and pushes the commit to the preferred branch of the new repository.
+
+The source code is [here](charts/ai-software-templates/chatbot/templates/application-gitops-job.yaml).
 
 ## OpenShift Pipelines
 
