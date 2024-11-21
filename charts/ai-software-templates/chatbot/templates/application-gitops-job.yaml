@@ -19,6 +19,31 @@ spec:
               #!/usr/bin/env bash
               set -o nounset
               set -o pipefail
+
+              setup_data() {
+                 gh repo clone "$GITHUB_SOURCE_REPO" app-source -- --no-tags --branch="$GITHUB_DEFAULT_BRANCH" --single-branch
+                 gh repo clone "$GITHUB_TETKON_SOURCE_REPO" tekton-source -- --no-tags --single-branch
+                 gh repo clone "$GH_REPO" "$APP_NAME" -- --no-tags --branch="$GITHUB_DEFAULT_BRANCH" --single-branch
+
+                 mkdir -p "$APP_NAME"/.tekton
+
+                 cd tekton-source/pac/pipelineRuns/.tekton || exit
+                 sed -i 's@'"$TEKTON_FILE_APP_NAME_REPLACEMENT"'@'"$APP_NAME"'@g' docker-push.yaml
+                 sed -i 's@'"$TEKTON_FILE_APP_NAMESPACE_REPLACEMENT"'@'"$APP_NAMESPACE"'@g' docker-push.yaml
+                 sed -i 's@'"$TEKTON_FILE_QUAY_ACCOUNT_REPLACEMENT"'@'"$QUAY_ACCOUNT_NAME"'@g' docker-push.yaml
+                 cd - || exit
+
+                 cd app-source/chatbot || exit
+                 tar cf - ./* | (cd ../../"$APP_NAME" || exit; tar xf -)
+                 cd ../../tekton-source/pac/pipelineRuns/.tekton || exit
+                 tar cf - ./* | (cd ../../../../"$APP_NAME"/.tekton || exit; tar xf -)
+                 cd ../../pipelines || exit
+                 tar cf - ./* | (cd ../../../"$APP_NAME"/.tekton || exit; tar xf -)
+                 cd ../tasks || exit
+                 tar cf - ./* | (cd ../../../"$APP_NAME"/.tekton || exit; tar xf -)
+                 cd ../../../"$APP_NAME" || exit
+              }
+
               cd /tmp || exit
               wget https://github.com/cli/cli/releases/download/v"$GH_VERSION"/gh_"$GH_VERSION"_linux_amd64.tar.gz || exit
               tar xzf gh_"$GH_VERSION"_linux_amd64.tar.gz
@@ -50,7 +75,47 @@ spec:
               return_code=$?
 
               if [ $return_code == 0 ]; then
-                echo Repo "$GH_REPO" already exists
+                echo Repo "$GH_REPO" already exists, checking if contents are OK
+                setup_data
+                cd $HOME || exit
+                gh repo clone "$GH_REPO" existing -- --no-tags --branch="$GITHUB_DEFAULT_BRANCH" --single-branch || exit
+                same=$(diff existing/Containerfile "$APP_NAME"/Containerfile)
+                return_code=$?
+                if [ $return_code != 0 ]; then
+                  echo "$same"
+                  exit 1
+                fi
+                same=$(diff existing/chatbot_ui.py "$APP_NAME"/chatbot_ui.py)
+                return_code=$?
+                if [ $return_code != 0 ]; then
+                  echo "$same"
+                  exit 1
+                fi
+                same=$(diff existing/requirements.txt "$APP_NAME"/requirements.txt)
+                return_code=$?
+                if [ $return_code != 0 ]; then
+                  echo "$same"
+                  exit 1
+                fi
+                same=$(diff existing/.tekton/docker-build-ai-software-templates-chart.yaml "$APP_NAME"/.tekton/docker-build-ai-software-templates-chart.yaml)
+                return_code=$?
+                if [ $return_code != 0 ]; then
+                  echo "$same"
+                  exit 1
+                fi
+                same=$(diff existing/.tekton/docker-push.yaml "$APP_NAME"/.tekton/docker-push.yaml)
+                return_code=$?
+                if [ $return_code != 0 ]; then
+                  echo "$same"
+                  exit 1
+                fi
+                same=$(diff existing/.tekton/update-deployment.yaml "$APP_NAME"/.tekton/update-deployment.yaml)
+                return_code=$?
+                if [ $return_code != 0 ]; then
+                  echo "$same"
+                  exit 1
+                fi
+                echo Repo "$GH_REPO" contents OK, exiting.
                 exit 0
               else
                 gh repo create "$GH_REPO" --public --gitignore Python --license Apache-2.0 || exit
@@ -62,27 +127,7 @@ spec:
                 fi
               fi
 
-              gh repo clone "$GITHUB_SOURCE_REPO" app-source -- --no-tags --branch="$GITHUB_DEFAULT_BRANCH" --single-branch
-              gh repo clone "$GITHUB_TETKON_SOURCE_REPO" tekton-source -- --no-tags --single-branch
-              gh repo clone "$GH_REPO" "$APP_NAME" -- --no-tags --branch="$GITHUB_DEFAULT_BRANCH" --single-branch
-
-              mkdir -p "$APP_NAME"/.tekton
-
-              cd tekton-source/pac/pipelineRuns/.tekton || exit
-              sed -i 's@'"$TEKTON_FILE_APP_NAME_REPLACEMENT"'@'"$APP_NAME"'@g' docker-push.yaml
-              sed -i 's@'"$TEKTON_FILE_APP_NAMESPACE_REPLACEMENT"'@'"$APP_NAMESPACE"'@g' docker-push.yaml
-              sed -i 's@'"$TEKTON_FILE_QUAY_ACCOUNT_REPLACEMENT"'@'"$QUAY_ACCOUNT_NAME"'@g' docker-push.yaml
-              cd - || exit
-
-              cd app-source/chatbot || exit
-              tar cf - ./* | (cd ../../"$APP_NAME" || exit; tar xf -)
-              cd ../../tekton-source/pac/pipelineRuns/.tekton || exit
-              tar cf - ./* | (cd ../../../../"$APP_NAME"/.tekton || exit; tar xf -)
-              cd ../../pipelines || exit
-              tar cf - ./* | (cd ../../../"$APP_NAME"/.tekton || exit; tar xf -)
-              cd ../tasks || exit
-              tar cf - ./* | (cd ../../../"$APP_NAME"/.tekton || exit; tar xf -)
-              cd ../../../"$APP_NAME" || exit
+              setup_data
 
               author=$(git log -1 --pretty=format:"%aN")
               email=$(git log -1 --pretty=format:"%ae")
