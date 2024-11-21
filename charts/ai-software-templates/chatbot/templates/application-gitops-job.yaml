@@ -83,11 +83,14 @@ spec:
               tar cf - ./* | (cd ../../../"$APP_NAME"/.tekton || exit; tar xf -)
               cd ../../../"$APP_NAME" || exit
 
-              git config user.email  "{{ .Values.gitops.gitAuthorEmail }}"
-              git config user.name  "{{ .Values.gitops.gitAuthorName }}"
+              author=$(git log -1 --pretty=format:"%aN")
+              email=$(git log -1 --pretty=format:"%ae")
+
+              git config user.email "$email"
+              git config user.name "$author"
 
               git status -s | grep "??" | awk '{ print $2 }' | xargs -l -r git add
-              git commit -a -m initial-commit
+              git commit -a -m "Copy repo content"
               git push origin "$GITHUB_DEFAULT_BRANCH"
 
           image: registry.redhat.io/openshift4/ose-docker-builder-rhel9:v4.16
