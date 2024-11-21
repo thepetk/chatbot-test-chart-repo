@@ -1,0 +1,99 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "title": "Chatbot AI Sample Helm Chart",
+    "properties": {
+        "application": {
+            "type": "object",
+            "properties": {
+                "appPort": {
+                    "title": "App Port",
+                    "type": "integer",
+                    "description": "The exposed port of the application.",
+                    "default": 8501
+                },
+                "appContainer": {
+                    "title": "App Container",
+                    "type": "string",
+                    "description": "The image used for the initial chatbot application interface.",
+                    "default": "quay.io/redhat-ai-dev/chatbot:latest"
+                }
+            }
+        },
+        "model": {
+            "type": "object",
+            "properties": {
+                "modelServicePort": {
+                    "title": "Service Port",
+                    "type": "integer",
+                    "description": "The exposed port of the model service.",
+                    "default": 8001
+                },
+                "modelServiceContainer": {
+                    "title": "Service Container",
+                    "type": "string",
+                    "description": "The image used for the model service.",
+                    "default": "quay.io/ai-lab/llamacpp_python:latest"
+                },
+                "initContainer": {
+                    "title": "Init Container",
+                    "type": "string",
+                    "description": "The image used for the initContainer of the model service deployment.",
+                    "default": "quay.io/redhat-ai-dev/granite-7b-lab:latest"
+                },
+                "modelInitCommand": {
+                    "title": "Init Command",
+                    "type": "string",
+                    "description": "The model service initContainer command.",
+                    "default": "['/usr/bin/install', '/model/model.file', '/shared/']"
+                },
+                "modelPath": {
+                    "title": "Path",
+                    "type": "string",
+                    "description": "The path of the model file inside the model service container.",
+                    "default": "/model/model.file"
+                }
+            }
+        },
+        "gitops": {
+            "type": "object",
+            "properties": {
+                "gitSecretName": {
+                    "title": "Secret Name",
+                    "type": "string",
+                    "description": "The name of the Secret containing the required Github token.",
+                    "default": "github-secrets"
+                },
+                "gitSecretKeyToken": {
+                    "title": "Secret Key Token",
+                    "type": "string",
+                    "description": "The name of the Secret's key with the Github token value.",
+                    "default": "GITHUB_TOKEN"
+                },
+                "githubOrgName": {
+                    "title": "GitHub Org Name",
+                    "type": "string",
+                    "description": "[REQUIRED] The Github Organization name that the chatbot application repository will be created into."
+                },
+                "gitSourceRepo": {
+                    "title": "Git Source Repo",
+                    "type": "string",
+                    "description": "The Github Repository with the contents of the ai-lab sample chatbot application. It must be either the 'redhat-ai-dev/ai-lab-samples' or its fork.",
+                    "default": "redhat-ai-dev/ai-lab-samples"
+                },
+                "gitDefaultBranch": {
+                    "title": "Git Default Branch",
+                    "type": "string",
+                    "description": "The default branch for the chatbot application Github repository.",
+                    "default": "main"
+                },
+                "quayAccountName": {
+                    "title": "Quay Account Name",
+                    "type": "string",
+                    "description": "[REQUIRED] The quay.io account that the application image will be pushed."
+                }
+            },
+            "required": ["quayAccountName", "githubOrgName"]
+        }
+    }
+}
