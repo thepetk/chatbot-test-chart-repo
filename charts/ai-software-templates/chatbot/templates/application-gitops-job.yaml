@@ -12,7 +12,118 @@ spec:
     spec:
       containers:
         - name: repo-creator
-          image: quay.io/redhat-ai-dev/helm-chart-application-gitops:latest
+          command:
+            - /bin/bash
+            - -c
+            - |
+              #!/usr/bin/env bash
+              set -o nounset
+              set -o pipefail
+
+              setup_data() {
+                 gh repo clone "$GITHUB_SOURCE_REPO" app-source -- --no-tags --branch="$GITHUB_DEFAULT_BRANCH" --single-branch
+                 gh repo clone "$GITHUB_TETKON_SOURCE_REPO" tekton-source -- --no-tags --single-branch
+                 gh repo clone "$GH_REPO" "$APP_NAME" -- --no-tags --branch="$GITHUB_DEFAULT_BRANCH" --single-branch
+
+                 mkdir -p "$APP_NAME"/.tekton
+
+                 cd tekton-source/pac/pipelineRuns/.tekton || exit
+                 sed -i 's@'"$TEKTON_FILE_APP_NAME_REPLACEMENT"'@'"$APP_NAME"'@g' docker-push.yaml
+                 sed -i 's@'"$TEKTON_FILE_APP_NAMESPACE_REPLACEMENT"'@'"$APP_NAMESPACE"'@g' docker-push.yaml
+                 sed -i 's@'"$TEKTON_FILE_QUAY_ACCOUNT_REPLACEMENT"'@'"$QUAY_ACCOUNT_NAME"'@g' docker-push.yaml
+                 cd - || exit
+
+                 cd app-source/chatbot || exit
+                 tar cf - ./* | (cd ../../"$APP_NAME" || exit; tar xf -)
+                 cd ../../tekton-source/pac/pipelineRuns/.tekton || exit
+                 tar cf - ./* | (cd ../../../../"$APP_NAME"/.tekton || exit; tar xf -)
+                 cd ../../../../"$APP_NAME" || exit
+              }
+
+              cd /tmp || exit
+              wget https://github.com/cli/cli/releases/download/v"$GH_VERSION"/gh_"$GH_VERSION"_linux_amd64.tar.gz || exit
+              tar xzf gh_"$GH_VERSION"_linux_amd64.tar.gz
+              GH_PATH=$(pwd)/gh_"$GH_VERSION"_linux_amd64/bin
+              export PATH="$GH_PATH":"$PATH"
+              export SOURCE_REPO_APP_CONTENT_PATH="chatbot"
+              export SOURCE_TEKTON_REPO_CONTENT_PATH="pac/pipelineRuns"
+              export TEKTON_FILE_APP_NAME_REPLACEMENT="application_name_replace"
+              export TEKTON_FILE_APP_NAMESPACE_REPLACEMENT="application_namespace_replace"
+              export TEKTON_FILE_QUAY_ACCOUNT_REPLACEMENT="quay_account_replace"
+              echo APP_NAME is "$APP_NAME"
+              echo APP_NAMESPACE is "$APP_NAMESPACE"
+              echo GITHUB_ORG_NAME is "$GITHUB_ORG_NAME"
+              echo GITHUB_SOURCE_REPO is "$GITHUB_SOURCE_REPO"
+              echo GITHUB_TETKON_SOURCE_REPO is "$GITHUB_TETKON_SOURCE_REPO"
+              echo GITHUB_DEFAULT_BRANCH is "$GITHUB_DEFAULT_BRANCH"
+              echo QUAY_ACCOUNT_NAME is "$QUAY_ACCOUNT_NAME"
+
+              export GH_TOKEN=$GITHUB_TOKEN
+              export GH_REPO="github.com/$GITHUB_ORG_NAME/$APP_NAME"
+
+              export HOME=/tmp
+
+              gh auth login -p https
+              gh auth setup-git --hostname=github.com
+
+              gh repo view "$GH_REPO" --json id 2> /dev/null
+
+              return_code=$?
+
+              if [ $return_code == 0 ]; then
+                echo Repo "$GH_REPO" already exists, checking if contents are OK
+                setup_data
+                cd $HOME || exit
+                gh repo clone "$GH_REPO" existing -- --no-tags --branch="$GITHUB_DEFAULT_BRANCH" --single-branch || exit
+                same=$(diff existing/Containerfile "$APP_NAME"/Containerfile)
+                return_code=$?
+                if [ $return_code != 0 ]; then
+                  echo "$same"
+                  exit 1
+                fi
+                same=$(diff existing/chatbot_ui.py "$APP_NAME"/chatbot_ui.py)
+                return_code=$?
+                if [ $return_code != 0 ]; then
+                  echo "$same"
+                  exit 1
+                fi
+                same=$(diff existing/requirements.txt "$APP_NAME"/requirements.txt)
+                return_code=$?
+                if [ $return_code != 0 ]; then
+                  echo "$same"
+                  exit 1
+                fi
+                same=$(diff existing/.tekton/docker-push.yaml "$APP_NAME"/.tekton/docker-push.yaml)
+                return_code=$?
+                if [ $return_code != 0 ]; then
+                  echo "$same"
+                  exit 1
+                fi
+                echo Repo "$GH_REPO" contents OK, exiting.
+                exit 0
+              else
+                gh repo create "$GH_REPO" --public --gitignore Python --license Apache-2.0 || exit
+                gh repo view "$GH_REPO" --json id 2> /dev/null
+                return_code=$?
+                if [ $return_code != 0 ]; then
+                  echo Repo create of "$GH_REPO" could not be confirmed
+                  exit $return_code
+                fi
+              fi
+
+              setup_data
+
+              author=$(git log -1 --pretty=format:"%aN")
+              email=$(git log -1 --pretty=format:"%ae")
+
+              git config user.email "$email"
+              git config user.name "$author"
+
+              git status -s | grep "??" | awk '{ print $2 }' | xargs -l -r git add
+              git commit -a -m "Copy repo content"
+              git push origin "$GITHUB_DEFAULT_BRANCH"
+
+          image: registry.redhat.io/openshift4/ose-docker-builder-rhel9:v4.16
           env:
             - name: GITHUB_TOKEN
               valueFrom:

@@ -15,3 +15,4 @@ data:
   GITHUB_TETKON_SOURCE_REPO: "redhat-ai-dev/ai-lab-helm-charts"
   GITHUB_DEFAULT_BRANCH: "{{ .Values.gitops.gitDefaultBranch }}"
   QUAY_ACCOUNT_NAME: "{{ .Values.gitops.quayAccountName }}"
+  GH_VERSION: "2.62.0"
