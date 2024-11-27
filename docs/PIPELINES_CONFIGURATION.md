@@ -15,36 +15,13 @@ The OpenShift Pipelines configuration is a requirement in order to support CI/CD
 kubectl get route -n openshift-pipelines pipelines-as-code-controller
 ```
 
-3. Download `cosign` depending on your platform, which will be used to generate the updated `signing-secrets`.
-
-```
-curl -sL https://github.com/sigstore/cosign/releases/latest/download/cosign-linux-amd64 -o /usr/bin/cosign && chmod +x /usr/bin/cosign
-```
-
-or
-
-```
-curl -sL https://github.com/sigstore/cosign/releases/latest/download/cosign-darwin-amd64 -o /usr/bin/cosign && chmod +x /usr/bin/cosign
-```
-
-4. In the `openshift-pipelines` Namespace, delete (if exists) the `signing-secrets` Secret.
-
-5. Generate the new `signing-secrets` in the `openshift-pipelines` Namespace and patch the new secret as immutable:
-
-```
-export KUBERNETES_SERVICE_PORT=<your-kubernetes-service port>
-export KUBERNETES_SERVICE_HOST=<your-kubernetes-service host>"
-cosign generate-key-pair k8s://openshift-pipelines/signing-secrets
-kubectl patch secret -n openshift-pipelines signing-secrets -o yaml --patch='{"immutable": true}'
-```
-
-6. Ensure that the `tektonconfigs` CRDs are available. You can verify that if the below command returns 1 as response:
+3. Ensure that the `tektonconfigs` CRDs are available. You can verify that if the below command returns 1 as response:
 
 ```
 kubectl api-resources | grep "tektonconfigs"
 ```
 
-7. Update the `tektonconfig`, by enabling the necessary resolvers:
+4. Update the `tektonconfig`, by enabling the necessary resolvers:
 
 ```
 kubectl patch tektonconfig config --type 'merge' --patch "$( cat <<EOF
@@ -66,7 +43,7 @@ EOF
 )"
 ```
 
-8. Create the `pipelines-as-code-secret`, containing your Github App's `App ID`, `Private Key`, `Webhook Secret`. Note, that your `Private Key` value needs to be passed as a multilined string and not flattened. Additionally, as mentioned in the `pipelines-as-code` documentation, [you can have one Github App connected to your Operator](https://pipelinesascode.com/docs/install/github_apps/). Every tenant in the cluster should install this app on their Github Organization to support the pipeline as code functionality.
+5. Create the `pipelines-as-code-secret`, containing your Github App's `App ID`, `Private Key`, `Webhook Secret`. Note, that your `Private Key` value needs to be passed as a multilined string and not flattened. Additionally, as mentioned in the `pipelines-as-code` documentation, [you can have one Github App connected to your Operator](https://pipelinesascode.com/docs/install/github_apps/). Every tenant in the cluster should install this app on their Github Organization to support the pipeline as code functionality.
 
 ```
 export GITHUB_APP_APP_ID=<your-github-app's-app-id-value>
