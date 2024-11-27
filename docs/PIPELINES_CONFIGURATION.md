@@ -69,8 +69,8 @@ EOF
 8. Create the `pipelines-as-code-secret`, containing your Github App's `App ID`, `Private Key`, `Webhook Secret`. Note, that your `Private Key` value needs to be passed as a multilined string and not flattened. Additionally, as mentioned in the `pipelines-as-code` documentation, [you can have one Github App connected to your Operator](https://pipelinesascode.com/docs/install/github_apps/). Every tenant in the cluster should install this app on their Github Organization to support the pipeline as code functionality.
 
 ```
-export PIPELINES_SECRET_NAME="ai-lab-pipelines-secret"
 export GITHUB_APP_APP_ID=<your-github-app's-app-id-value>
+export GITHUB_APP_WEBHOOK_SECRET=<your-github-app's-webhook-secret>
 export GITHUB_APP_PRIVATE_KEY="
 <your-multi-lined-github-app-private-key>
 "
