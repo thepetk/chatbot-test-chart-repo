@@ -46,8 +46,8 @@ EOF
 5. Create the `pipelines-as-code-secret`, containing your Github App's `App ID`, `Private Key`, `Webhook Secret`. Note, that your `Private Key` value needs to be passed as a multilined string and not flattened. Additionally, as mentioned in the `pipelines-as-code` documentation, [you can have one Github App connected to your Operator](https://pipelinesascode.com/docs/install/github_apps/). Every tenant in the cluster should install this app on their Github Organization to support the pipeline as code functionality.
 
 ```
-export GITHUB_APP_APP_ID=<your-github-app's-app-id-value>
-export GITHUB_APP_WEBHOOK_SECRET=<your-github-app's-webhook-secret>
+export GITHUB_APP_APP_ID="your-github-app's-app-id-value"
+export GITHUB_APP_WEBHOOK_SECRET="your-github-app's-webhook-secret"
 export GITHUB_APP_PRIVATE_KEY="
 <your-multi-lined-github-app-private-key>
 "
@@ -62,7 +62,7 @@ kubectl -n openshift-pipelines create secret generic pipelines-as-code-secret \
 1. Create the `ai-lab-image-registry-token` in your application's Namespace, containing the docker `config.json` file of your Quay.io account (see more info [here](https://docs.redhat.com/en/documentation/red_hat_quay/3.6/html-single/use_red_hat_quay/index#allow-robot-access-user-repo)):
 
 ```
-export $APP_NAMESPACE="your-app's namespace"
+export APP_NAMESPACE="your-app's namespace"
 export IMAGE_REGISTRY_TOKEN_SECRET="ai-lab-image-registry-token"
 kubectl -n $APP_NAMESPACE create secret docker-registry "$IMAGE_REGISTRY_TOKEN_SECRET" --from-file=.dockerconfigjson=<your-docker-config.json-file-path>
 ```
