@@ -1,9 +1,8 @@
-
-
+{{ template "chart.deprecationWarning" . }}
 # Chatbot AI Sample Helm Chart
-![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+{{ template "chart.badgesSection" . }}
 
-This Helm Chart deploys a Large Language Model (LLM)-enabled [chat bot application](https://github.com/redhat-ai-dev/ai-lab-samples/tree/main/chatbot).
+{{ template "chart.description" . }}
 
 ## Background
 
@@ -24,7 +23,7 @@ A [repository](./templates/tekton-repository.yaml) which connects our applicatio
 ## Prerequisites
 
 - A [Github Application](https://github.com/redhat-ai-dev/ai-rhdh-installer/blob/main/docs/APP-SETUP.md#github-app) with `create repository` permissions for the GitHub Organization where the application will be created.
-- Access to an OpenShift 4.x cluster with
+- Access to an OpenShift 4.x cluster with 
     - permissions to deploy an application
 	- an existing Namespace where your application will be deployed
 	- correctly [installed](https://www.redhat.com/en/technologies/cloud-computing/openshift/pipelines) and [configured](https://github.com/redhat-ai-dev/ai-lab-helm-charts/blob/main/docs/PIPELINES_CONFIGURATION.md) OpenShift Pipelines Operator which is connected to your GitHub Applications webhook
@@ -52,34 +51,9 @@ Just copy the existing `values.yaml` file in this directory to `private-values.y
 helm upgrade --install <release-name> --namespace <release-namespace> -f ./private-values.yaml .
 ```
 
-## Maintainers
-
-| Name | Email | Url |
-| ---- | ------ | --- |
-| Red Hat AI Development Team |  | <https://github.com/redhat-ai-dev> |
-## Source Code
-
-* <https://github.com/redhat-ai-dev/ai-lab-template>
-## Requirements
-
-Kubernetes: `>= 1.27.0-0`
-
-## Values
-
-| Key | Type | Default | Description |
-|-----|------|---------|-------------|
-| application.appContainer | string | `"quay.io/redhat-ai-dev/chatbot:latest"` | The image used for the initial chatbot application interface |
-| application.appPort | int | `8501` | The exposed port of the application |
-| gitops.gitDefaultBranch | string | `"main"` | The default branch for the chatbot application Github repository |
-| gitops.gitSecretKeyToken | string | `"GITHUB_TOKEN"` | The name of the Secret's key with the Github token value |
-| gitops.gitSecretName | string | `"github-secrets"` | The name of the Secret containing the required Github token |
-| gitops.gitSourceRepo | string | `"redhat-ai-dev/ai-lab-samples"` | The Github Repository with the contents of the ai-lab sample chatbot application |
-| gitops.githubOrgName | string | `""` | [REQUIRED] The Github Organization name that the chatbot application repository will be created in |
-| gitops.quayAccountName | string | `""` | [REQUIRED] The quay.io account that the application image will be pushed |
-| model.initContainer | string | `"quay.io/redhat-ai-dev/granite-7b-lab:latest"` | The image used for the initContainer of the model service deployment |
-| model.modelInitCommand | string | `"['/usr/bin/install', '/model/model.file', '/shared/']"` | The model service initContainer command |
-| model.modelPath | string | `"/model/model.file"` | The path of the model file inside the model service container |
-| model.modelServiceContainer | string | `"quay.io/ai-lab/llamacpp_python:latest"` | The image used for the model service |
-| model.modelServicePort | int | `8001` | The exposed port of the model service |
+{{ template "chart.maintainersSection" . }}
+{{ template "chart.sourcesSection" . }}
+{{ template "chart.requirementsSection" . }}
+{{ template "chart.valuesSection" . }}
 
 **NOTE:** Your helm release's name will be used as the name of the application github repository

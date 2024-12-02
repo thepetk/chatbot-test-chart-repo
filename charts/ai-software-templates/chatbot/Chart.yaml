@@ -1,8 +1,37 @@
+# The chart API version (required)
 apiVersion: v2
+# The name of the chart (required)
+name: chatbot-ai-sample
+# A SemVer 2 version (required)
+version: 0.1.1
+# A SemVer range of compatible Kubernetes versions (optional)
 kubeVersion: ">= 1.27.0-0"
+# A single-sentence description of this project (optional)
+description: This Helm Chart deploys a Large Language Model (LLM)-enabled [chat bot application](https://github.com/redhat-ai-dev/ai-lab-samples/tree/main/chatbot).
+# The type of the chart (optional)
+type: application
+# A list of keywords about this project (optional)
+keywords:
+  - chatbot
+  - llama.cpp
+  - ai-lab 
+# The URL of this projects home page (optional)
+home: https://github.com/redhat-ai-dev/ai-lab-helm-charts
+# A list of URLs to source code for this project (optional)
+sources:
+  - https://github.com/redhat-ai-dev/ai-lab-template
+# A list of the chart requirements (optional)
+dependencies: []
+# A list of maintainers of this project (optional)
+maintainers:
+  - name: Red Hat AI Development Team
+    url: https://github.com/redhat-ai-dev
+# A URL to an SVG or PNG image to be used as an icon (optional)
+# icon: ""
+# The version of the app that this contains (optional). Needn't be SemVer. Quotes recommended.
+# appVersion: 
+# Whether this chart is deprecated (optional, boolean)
+deprecated: false
+# A list of annotations keyed by name (optional)
 annotations:
   charts.openshift.io/name: Chatbot AI Sample
-description: A Helm chart for the Chatbot AI Sample app. For more information please check https://github.com/redhat-ai-dev/ai-lab-helm-charts.git
-name: chatbot-ai-sample
-tags: chatbot,llama.cpp,ai-lab
-version: 0.1.1
