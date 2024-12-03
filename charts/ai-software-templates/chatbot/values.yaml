@@ -12,7 +12,7 @@ model:
 
 gitops:
   gitSecretName: "github-secrets"
-  gitSecretKeyToken: "GITHUB_TOKEN"
+  gitSecretToken: "GITHUB_TOKEN"
   gitSourceRepo: "redhat-ai-dev/ai-lab-samples"
   gitDefaultBranch: "main"
   githubOrgName: ""

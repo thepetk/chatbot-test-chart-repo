@@ -1,0 +1,23 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "type": "object",
+    "properties": {
+        "tekton": {
+            "type": "object",
+            "properties": {
+                "gitAppId": {
+                    "type": "string",
+                    "description": "[REQUIRED] The GitHub Application ID"
+                },
+                "gitAppWebhookSecret": {
+                    "type": "string",
+                    "description": "[REQUIRED] The GitHub Application Webhook Secret"
+                },
+                "gitAppPrivateKey": {
+                    "type": "string",
+                    "description": "[REQUIRED] The GitHub Application Private Key"
+                }
+           }
+        }
+    }
+}

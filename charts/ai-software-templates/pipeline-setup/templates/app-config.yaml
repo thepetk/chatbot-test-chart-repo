@@ -13,9 +13,8 @@ metadata:
 data:
   APP_NAME: "{{ .Release.Name }}"
   APP_NAMESPACE: "{{ .Release.Namespace }}"
-  GITHUB_ORG_NAME: "{{ .Values.gitops.githubOrgName }}"  
-  GITHUB_SOURCE_REPO: "{{ .Values.gitops.gitSourceRepo }}"
-  GITHUB_TETKON_SOURCE_REPO: "redhat-ai-dev/ai-lab-helm-charts"
-  GITHUB_DEFAULT_BRANCH: "{{ .Values.gitops.gitDefaultBranch }}"
-  QUAY_ACCOUNT_NAME: "{{ .Values.gitops.quayAccountName }}"
-  GH_VERSION: "2.62.0"
+  QUAY_CONFIG_JSON: '{{ .Values.tekton.quayConfigJSON }}'
+  QUAY_SECRET_NAME: "{{ .Values.tekton.quaySecretName}}"
+  GIT_TOKEN: "{{ .Values.tekton.gitSecretToken }}"
+  GIT_TOKEN_KEY: "{{ .Values.tekton.gitSecretKeyToken }}"
+  GIT_SECRET_NAME: "{{ .Values.tekton.gitSecretName }}"

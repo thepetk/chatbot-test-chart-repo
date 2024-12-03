@@ -1,0 +1,8 @@
+apiVersion: v2
+kubeVersion: ">= 1.27.0-0"
+annotations:
+  charts.openshift.io/name: OpenShift Pipelines Install for AI sample applications
+description: A Helm chart for installing the OpenShift Pipelines Operator, ensuring requisite features for our samples are enabled, as well as providing GitHub Application credentials to Pipelines As Code.
+name: ops-ai-labs-install
+tags: tekton,pipelines,operator
+version: 0.1.0

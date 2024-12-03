@@ -1,0 +1,11 @@
+
+Thank you for installing the OpenShift Pipelines Installation Application (User/Tenant Admin) for RedHat Developer AI Sample Applications!
+
+Now that you have deployed the application, you can find more details here:
+
+https://github.com/redhat-ai-dev/ai-lab-helm-charts
+
+Your release is named {{ .Release.Name }}. To learn more about the release, try:
+
+  $ helm status {{ .Release.Name }}
+  $ helm get manifest {{ .Release.Name }}

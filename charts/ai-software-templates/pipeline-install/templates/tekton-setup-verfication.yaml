@@ -1,0 +1,63 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  annotations:
+    helm.sh/hook: post-install,post-upgrade
+    helm.sh/hook-delete-policy: hook-succeeded
+  labels:
+    app.kubernetes.io/instance: {{ .Release.Name }}-tekton-setup
+    app.kubernetes.io/name:  {{ .Release.Name }}-tekton-setup
+    app.kubernetes.io/part-of: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }} 
+  name: {{ .Release.Name }}-tekton-setup
+spec:
+  template:
+    spec:
+      containers:
+        - name: verify-tekton-update-tektonconfig
+          command:
+            - /bin/bash
+            - -c
+            - |
+              #!/usr/bin/env bash
+              set -o nounset
+              set -o pipefail
+
+              cd /tmp || exit
+
+              echo APP_NAME is "$APP_NAME"
+              echo APP_NAMESPACE is "$APP_NAMESPACE"
+
+              until oc get route -n "$APP_NAMESPACE" pipelines-as-code-controller; do
+                sleep 3
+              done
+              echo "Pipelines OK"
+
+              # with no use of chains nor konflux OCI bundles, the default tektonconfig is sufficient for us
+
+              exists=$(oc get secret pipelines-as-code-secret -n "$APP_NAMESPACE")
+              return_code=$?
+              if [ $return_code == 0 ]; then
+                oc -n "$APP_NAMESPACE" delete secret pipelines-as-code-secret || exit
+                sleep 1
+              fi
+
+              # TODO kludge since we cannot get multi-line values.yaml to configmap key/value so that we do not lose our newlines
+              # tried server of the ': |' and ': |-' and ': |+' and toYaml and indent and double curly bracket plus hyphen derivatives
+              GITHUB_APP_PRIVATE_KEY=$(echo "$GITHUB_APP_PRIVATE_KEY" | sed 's/-----BEGIN RSA PRIVATE KEY-----/55555/g' )
+              GITHUB_APP_PRIVATE_KEY=$(echo "$GITHUB_APP_PRIVATE_KEY" | sed 's/-----END RSA PRIVATE KEY-----/66666/g' )
+              GITHUB_APP_PRIVATE_KEY=$(echo "$GITHUB_APP_PRIVATE_KEY" | sed 's/ /\n/g' )
+              GITHUB_APP_PRIVATE_KEY=$(echo "$GITHUB_APP_PRIVATE_KEY" | sed 's/55555/-----BEGIN RSA PRIVATE KEY-----/g' )
+              GITHUB_APP_PRIVATE_KEY=$(echo "$GITHUB_APP_PRIVATE_KEY" | sed 's/66666/-----END RSA PRIVATE KEY-----/g' )
+
+              oc -n "$APP_NAMESPACE" create secret generic pipelines-as-code-secret \
+              --from-literal github-application-id="$GITHUB_APP_APP_ID" \
+              --from-literal github-private-key="$GITHUB_APP_PRIVATE_KEY" \
+              --from-literal webhook.secret="$GITHUB_APP_WEBHOOK_SECRET"
+
+          image: registry.redhat.io/openshift4/ose-cli-rhel9:v4.16
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-app-config
+      restartPolicy: Never
+      serviceAccountName: {{ .Release.Name }}-sa

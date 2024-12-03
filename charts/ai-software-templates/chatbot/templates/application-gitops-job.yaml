@@ -1,7 +1,10 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  labels: 
+  annotations:
+    helm.sh/hook: post-install,post-upgrade
+    helm.sh/hook-delete-policy: hook-succeeded
+  labels:
     app.kubernetes.io/instance: {{ .Release.Name }}-github-repo-creator
     app.kubernetes.io/name:  {{ .Release.Name }}-github-repo-creator
     app.kubernetes.io/part-of: {{ .Release.Name }}
@@ -34,9 +37,9 @@ spec:
                  cd - || exit
 
                  cd app-source/chatbot || exit
-                 tar cf - ./* | (cd ../../"$APP_NAME" || exit; tar xf -)
+                 cp * ../../"$APP_NAME"
                  cd ../../tekton-source/pac/pipelineRuns/.tekton || exit
-                 tar cf - ./* | (cd ../../../../"$APP_NAME"/.tekton || exit; tar xf -)
+                 cp docker-push.yaml ../../../../"$APP_NAME"/.tekton
                  cd ../../../../"$APP_NAME" || exit
               }
 
@@ -75,30 +78,23 @@ spec:
                 setup_data
                 cd $HOME || exit
                 gh repo clone "$GH_REPO" existing -- --no-tags --branch="$GITHUB_DEFAULT_BRANCH" --single-branch || exit
-                same=$(diff existing/Containerfile "$APP_NAME"/Containerfile)
-                return_code=$?
-                if [ $return_code != 0 ]; then
-                  echo "$same"
-                  exit 1
-                fi
-                same=$(diff existing/chatbot_ui.py "$APP_NAME"/chatbot_ui.py)
-                return_code=$?
-                if [ $return_code != 0 ]; then
-                  echo "$same"
-                  exit 1
-                fi
-                same=$(diff existing/requirements.txt "$APP_NAME"/requirements.txt)
-                return_code=$?
-                if [ $return_code != 0 ]; then
-                  echo "$same"
-                  exit 1
-                fi
-                same=$(diff existing/.tekton/docker-push.yaml "$APP_NAME"/.tekton/docker-push.yaml)
-                return_code=$?
-                if [ $return_code != 0 ]; then
-                  echo "$same"
-                  exit 1
-                fi
+
+                FILES=("Containerfile"
+                "chatbot_ui.py"
+                "requirements.txt"
+                ".tekton/docker-push.yaml")
+
+                for FILE in "${FILES[@]}"
+                do
+                  echo Looking at "${FILE}"
+                  same=$(diff existing/"${FILE}" "$APP_NAME"/"${FILE}")
+                  return_code=$?
+                  if [ $return_code != 0 ]; then
+                    echo "$same"
+                    exit 1
+                  fi
+                done
+
                 echo Repo "$GH_REPO" contents OK, exiting.
                 exit 0
               else
@@ -119,7 +115,7 @@ spec:
               git config user.email "$email"
               git config user.name "$author"
 
-              git status -s | grep "??" | awk '{ print $2 }' | xargs -l -r git add
+              git status -s | awk '{ print $2 }' | xargs -l -r git add
               git commit -a -m "Copy repo content"
               git push origin "$GITHUB_DEFAULT_BRANCH"
 
