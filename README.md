@@ -23,15 +23,15 @@ The source code is [here](charts/ai-software-templates/chatbot/templates/applica
 
 For OpenShift Pipelines configuration the two Helm charts provided are:
 
-- The [Pipeline Install Helm Chart](/charts/ai-software-templates/pipeline-install) that makes Cluster Administrative level changes to OpenShift Pipelines to make sure that 
-  - OpenShift Pipelines is installed.
+- The [Pipeline Install Helm Chart](/charts/ai-software-templates/pipeline-install) that makes Cluster Administrative level changes to OpenShift Pipelines to make sure that:
+  - OpenShift Pipelines Operator is installed.
   - The correct Tekton Pipelines features are configured for our purposes.
   - The Pipelines As Code component is set up with the requisite credentials to process GitHub events for you GitHub Application.
 - The [Pipeline Setup Helm Chart](/charts/ai-software-templates/pipeline-setup) that makes the User/Tenant changes in your application Namespace:
   - The Pipelines As Code PipelinesRuns in your Namespace have the requisite credentials to push your application's image to your Quay repository.
   - The [Gitops component](#gitops) has the requisite credentials to interact with the GitHub repository for your application. 
 
-The chatbot helm chart mainly uses the tekton pipelines under [rhdh-pipelines](https://github.com/redhat-ai-dev/rhdh-pipelines) repo. The only customized resources used for the helm chart case are:
+The `chatbot-ai-sample` helm chart mainly uses the tekton pipelines under [rhdh-pipelines](https://github.com/redhat-ai-dev/rhdh-pipelines) repo. The only customized resources used for the helm chart case are:
 
 - The [.tekton/docker-push.yaml](/pac/pipelineRuns/.tekton/docker-push.yaml) PipelineRun used to manage `push` events received from the github app webhook.
 - The [update-deployment.yaml](/pac/tasks/update-deployment.yaml) Task which is used to update the application deployment whenever a new image is pushed to the image registry.
