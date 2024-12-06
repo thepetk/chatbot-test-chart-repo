@@ -26,14 +26,14 @@ The helm chart can be directly installed from the OpenShift Dev Console. Check [
 To install the Pipelines Setup Helm chart using Helm directly, you can run:
 
 ```
-helm upgrade --install <release-name> --namespace openshift-pipelines --create-namespace .
+helm upgrade --install <release-name> --namespace <helm-release-and-chatbot-application-namespace> --create-namespace .
 ```
 
 The `.gitignore` file in this repository filters files named `private-values.yaml`.  Thus, you can maintain in 
 your local fork of this repository a value settings file outside of git management.  Copy `values.yaml` in this directory to `private-values.yaml` and make any necessary edits to `private-values.yaml`.  Then change your helm invocation to the following:
 
 ```shell
-helm upgrade --install <release-name> --namespace openshift-pipelines --create-namespace -f ./private-values.yaml .
+helm upgrade --install <release-name> --namespace <helm-release-and-chatbot-application-namespace> --create-namespace -f ./private-values.yaml .
 ```
 
 ## Values

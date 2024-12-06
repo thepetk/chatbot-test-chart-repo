@@ -13,8 +13,6 @@ metadata:
 data:
   APP_NAME: "{{ .Release.Name }}"
   APP_NAMESPACE: "{{ .Release.Namespace }}"
-  QUAY_CONFIG_JSON: '{{ .Values.tekton.quayConfigJSON }}'
   QUAY_SECRET_NAME: "{{ .Values.tekton.quaySecretName}}"
-  GIT_TOKEN: "{{ .Values.tekton.gitSecretToken }}"
   GIT_TOKEN_KEY: "{{ .Values.tekton.gitSecretKeyToken }}"
   GIT_SECRET_NAME: "{{ .Values.tekton.gitSecretName }}"

@@ -14,7 +14,7 @@ metadata:
 rules:
   - apiGroups: [""]
     resources: ["secrets", "serviceaccounts"]
-    verbs: ["get", "create", "patch", "update"]
+    verbs: ["get", "create", "patch", "update", "delete"]
 
 ---
 apiVersion: rbac.authorization.k8s.io/v1
