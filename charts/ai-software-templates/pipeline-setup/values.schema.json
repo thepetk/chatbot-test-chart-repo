@@ -1,0 +1,35 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "type": "object",
+    "properties": {
+        "tekton": {
+            "type": "object",
+            "properties": {
+                "quayConfigJSON": {
+                    "type": "string",
+                    "description": "[REQUIRED] The quay.io config.json used when the application image will be pushed."
+                },
+                "quaySecretName": {
+                    "type": "string",
+                    "description": "The name of the Secret containing the required Quay token. If blank it defaults to 'ai-lab-image-registry-token'.",
+                    "default": "ai-lab-image-registry-token"
+                },
+                "gitSecretName": {
+                    "type": "string",
+                    "description": "The name of the Secret containing the required Github token. If blank it defaults to 'github-secrets'.",
+                    "default": "github-secrets"
+                },
+                "gitSecretKeyToken": {
+                    "type": "string",
+                    "description": "The name of the Secret's key with the Github token value. If blank it defaults to 'password'.",
+                    "default": "password"
+                },
+                "gitSecretToken": {
+                    "type": "string",
+                    "description": "[REQUIRED] The Github token value."
+                }
+            }
+        }
+    }
+}
+

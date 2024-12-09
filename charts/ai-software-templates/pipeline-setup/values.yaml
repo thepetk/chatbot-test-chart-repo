@@ -1,0 +1,7 @@
+
+tekton:
+  quayConfigJSON: '< your config.json file contents, ideally in compact, single line format>'
+  quaySecretName: ai-lab-image-registry-token
+  gitSecretToken: "<your git token>"
+  gitSecretName: github-secrets
+  gitSecretKeyToken: password

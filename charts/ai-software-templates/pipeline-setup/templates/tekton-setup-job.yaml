@@ -1,0 +1,67 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  annotations:
+    helm.sh/hook: post-install,post-upgrade
+    helm.sh/hook-delete-policy: hook-succeeded
+  labels:
+    app.kubernetes.io/instance: {{ .Release.Name }}-tekton-setup
+    app.kubernetes.io/name:  {{ .Release.Name }}-tekton-setup
+    app.kubernetes.io/part-of: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }} 
+  name: {{ .Release.Name }}-tekton-setup
+spec:
+  template:
+    spec:
+      containers:
+        - name: setup-secrets
+          command:
+            - /bin/bash
+            - -c
+            - |
+              #!/usr/bin/env bash
+              set -o nounset
+              set -o pipefail
+
+              cd /tmp || exit
+
+              echo APP_NAME is "$APP_NAME"
+              echo APP_NAMESPACE is "$APP_NAMESPACE"
+
+              echo $QUAY_CONFIG_JSON > /tmp/config.json || exit
+              exists=$(oc get secret "$QUAY_SECRET_NAME" -n "$APP_NAMESPACE")
+              return_code=$?
+              if [ $return_code == 0 ]; then
+                oc -n "$APP_NAMESPACE" delete secret "$QUAY_SECRET_NAME" || exit
+                sleep 1
+              fi
+              oc -n "$APP_NAMESPACE" create secret docker-registry "$QUAY_SECRET_NAME" --from-file=.dockerconfigjson='/tmp/config.json' || exit
+
+              oc secrets link pipeline "$QUAY_SECRET_NAME" --for=pull,mount || exit
+              oc secrets link default "$QUAY_SECRET_NAME" --for=pull,mount || exit
+
+              exists=$(oc get secret "$GIT_SECRET_NAME" -n "$APP_NAMESPACE")
+              return_code=$?
+              if [ $return_code == 0 ]; then
+                oc -n "$APP_NAMESPACE" delete secret "$GIT_SECRET_NAME" || exit
+                sleep 1
+              fi
+              oc -n "$APP_NAMESPACE" create secret generic "$GIT_SECRET_NAME" --from-literal="$GIT_TOKEN_KEY"="$GIT_TOKEN" --type=kubernetes.io/basic-auth
+
+          image: registry.redhat.io/openshift4/ose-cli-rhel9:v4.16
+          env:
+            - name: GIT_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-app-secret
+                  key: git
+            - name: QUAY_CONFIG_JSON
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-app-secret
+                  key: quay
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-app-config
+      restartPolicy: Never
+      serviceAccountName: {{ .Release.Name }}-sa

@@ -57,8 +57,8 @@
                 },
                 "gitSecretKeyToken": {
                     "type": "string",
-                    "description": "The name of the Secret's key with the Github token value. If blank it defaults to 'GITHUB_TOKEN'.",
-                    "default": "GITHUB_TOKEN"
+                    "description": "The name of the Secret's key with the Github token value. If blank it defaults to 'password'.",
+                    "default": "password"
                 },
                 "githubOrgName": {
                     "type": "string",

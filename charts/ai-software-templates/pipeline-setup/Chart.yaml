@@ -1,0 +1,8 @@
+apiVersion: v2
+kubeVersion: ">= 1.27.0-0"
+annotations:
+  charts.openshift.io/name: OpenShift Pipeline Setup for AI sample applications.
+description: A Helm chart for integrating the Git and Quay configuration for Pipelines in the user's application namespace.
+name: ops-ai-labs-setup
+tags: tekton,pipelines,operator,ai-lab
+version: 0.1.0

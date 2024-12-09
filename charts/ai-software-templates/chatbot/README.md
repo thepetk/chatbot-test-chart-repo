@@ -9,7 +9,7 @@ The deployment flow, will create an application instance, a model server and a g
 - You have a Github APP created with sufficient permissions for the organization that the application repository will be created. Detailed instructions for the github application creation can be found [here](https://github.com/redhat-ai-dev/ai-rhdh-installer/blob/main/docs/APP-SETUP.md#github-app).
 - You need to have access to a cluster for each operation with OpenShift 4, like deploying and testing.
 - The Namespace that your application will run is already created in your cluster.
-- Your cluster should have [Openshift Pipelines Operator](https://www.redhat.com/en/technologies/cloud-computing/openshift/pipelines) installed and should be connected to your Github App's webhook. In case your cluster is not configured yet, check the ["Pipelines Configuration Guide"](https://github.com/redhat-ai-dev/ai-lab-helm-charts/blob/main/docs/PIPELINES_CONFIGURATION.md) for further instructions.
+- Your cluster should have [Openshift Pipelines Operator](https://www.redhat.com/en/technologies/cloud-computing/openshift/pipelines) installed and should be connected to your Github App's webhook. In case your cluster is not configured yet, check out our [installation](../pipeline-install/README.md) and [setup](../pipeline-setup/README.md) helm charts doing this.
 - A `key/value` Secret is already created in the Namespace that you are planning to install your helm release, containing a [Github Token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic) with sufficient access to the given Github Organization. You can find the exact permissions [here](https://github.com/redhat-ai-dev/ai-rhdh-installer/blob/main/docs/APP-SETUP.md#procedure). Your Secret's name and the Key of the github token will be provided as values to the helm chart.
 
 ## Background
@@ -33,14 +33,14 @@ The helm chart can be directly installed from the OpenShift Dev Console. Check [
 To install the Chatbot AI Sample Helm chart using Helm directly, you can run:
 
 ```
-helm upgrade --install <release-name> --namespace <release-namespace> .
+helm upgrade --install <release-name> --namespace <helm-release-and-chatbot-application-namespace> .
 ```
 
 The `.gitignore` file in this repository filters files named `private-values.yaml`.  Thus, you can maintain in 
 your local fork of this repository a value settings file outside of git management.  Copy `values.yaml` in this directory to `private-values.yaml` and make any necessary edits to `private-values.yaml`.  Then change your helm invocation to the following:
 
 ```shell
-helm upgrade --install <release-name> --namespace <release-namespace> -f ./private-values.yaml .
+helm upgrade --install <release-name> --namespace <helm-release-and-chatbot-application-namespace> -f ./private-values.yaml .
 ```
 
 ## Values
@@ -71,7 +71,7 @@ Below is a table of each value used to configure this chart. Note:
 | Value                      | Description                                                                                                                                         | Default                        | Additional Information |
 | -------------------------- |-----------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------| ---------------------- |
 | `gitops.gitSecretName`     | The name of the Secret containing the required Github token.                                                                                        | `git-secrets`                  |                        |
-| `gitops.gitSecretKeyToken` | The name of the Secret's key with the Github token value.                                                                                           | `GITHUB_TOKEN`                 |                        |
+| `gitops.gitSecretKeyToken` | The name of the Secret's key with the Github token value.                                                                                           | `password`                     |                        |
 | `gitops.githubOrgName`     | `[REQUIRED]` The Github Organization name that the chatbot application repository will be created into.                                             |                                |                        |
 | `gitops.gitSourceRepo`     | The Github Repository with the contents of the ai-lab sample chatbot application. It must be either the `redhat-ai-dev/ai-lab-samples` or its fork. | `redhat-ai-dev/ai-lab-samples` |
 | `gitops.gitDefaultBranch`  | The default branch for the chatbot application Github repository.                                                                                   | `main`                         |                        |
